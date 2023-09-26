@@ -30,6 +30,7 @@
         </div>
         <button class="login-button" type="submit"> Login <i class="fa-solid fa-right-to-bracket fa-fade"></i></button>
         <button class="register-button" type="submit" onclick="window.location.href = 'registerUser.php';"> Register <i class="fa-solid fa-address-card fa-fade"></i></button>
+        <a href="#">Sign in as Admin</a>
     </div>
 <script>
         document.addEventListener('DOMContentLoaded', function() {
