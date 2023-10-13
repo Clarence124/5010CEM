@@ -15,41 +15,26 @@
 </head>
 <body>
     
-
+    <form action="userLoginCheck.php" method="POST">
     <div class="login-container">
         <h1>Login</h1>
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <input type="text" class="uname" id="uname" name="uname" placeholder="Enter your username" required>
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        
-
+            <input type="password" class="pass" id="pass" name="pass" placeholder="Enter your password" required>
         </div>
-        <button class="login-button" type="submit"> Login <i class="fa-solid fa-right-to-bracket fa-fade"></i></button>
+
+        <button type="submit" class="login-button" > Login <i class="fa-solid fa-right-to-bracket fa-fade"></i></button>
         <button class="register-button" type="submit" onclick="window.location.href = 'registerUser.php';"> Register <i class="fa-solid fa-address-card fa-fade"></i></button>
+        </form>
+
         <a href="#">Sign in as Admin</a>
-    </div>
-<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginContainer = document.querySelector('.login-container');
-            const loginButton = document.querySelector('.login-button');
+        
+        </div>
 
-            loginButton.addEventListener('click', function() {
-                loginContainer.classList.add('clicked');
-
-                // Simulate login process
-                setTimeout(function() {
-                    // Redirect to the dashboard or perform further actions here
-                    alert('Login successful! Redirecting...');
-                }, 1000); // Adjust the delay as needed
-
-               
-            });
-        });
-    </script>
 
 </body>
 </html>

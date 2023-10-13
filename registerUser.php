@@ -131,7 +131,7 @@ form .input-box span.details{
           
           <div class="input-box">
             <span class="details">Phone Number</span>
-            <input type="tel" name="pnumber" class="pnumber" placeholder="Enter eg: 01X XXXXXXXX" pattern="[0-9]{3}-[0-9]{8}" required>
+            <input type="tel" name="pnumber" class="pnumber" placeholder="Enter eg: 01X-XXXXXXX" pattern="[0-9]{3}-[0-9]{7}" required>
           </div>
           
           <div class="input-box">
