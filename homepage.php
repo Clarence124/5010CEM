@@ -142,10 +142,15 @@ body {
   font-size: 20px;
 }
 
+.marquee{
+margin-top: 15;
+margin-left: 35%;
+
+}
 
 .content {
   margin-left: 200px;
-  margin-top: 120px;
+  
   padding: 20px;
 }
 
@@ -191,18 +196,108 @@ body {
     opacity: 1;
   }
 
+  
+.content .container {
+  text-align: center; /* Center the text within the container */
+  background-color: #fff;
+}
+
+.content .container .title h1{
+  margin-bottom: 0px;
+}
+
+.content .container .title {
+  position: relative;
+  display: inline-block; /* Make the title inline so the underline is centered below it */
+  margin-bottom: 50px;
+}
+
+.content .container .title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  width: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgba(224,55,9,1) 27%, rgba(200,80,235,1) 64%);
+}
+
+.faq-question {
+   cursor: pointer;
+   font-weight: bold;
+        }
+
+.faq-answer {
+    display: none;
+    margin-top: 10px;
+    font-weight: 300;
+  }
+
+
     </style>
 
     <body>
 
-      <div class="content">
-    
+      <div class="marquee">
+        
+        <marquee scrollamount="16"><h1>hi</h1></marquee>
+                   
+        </div>
+        
+        <div class="content">
+          
         <div class="slideshow">
           <img src="banner1.png" class="active">
           <img src="banner2.png" >
         
         </div>
-      </div>
+        
+        <div class="aboutus">
+          
+          about us here
+        </div>
+
+
+        
+        <div class="container">
+          
+          <div class="title"><center><h1>Frequently Asked Questions (FAQ)</h1></center></div>
+
+          <div class="faq">
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer1')">1. What types of motor spare parts do you offer?</div>
+            <div class="faq-answer" id="answer1">We offer a wide range of motor spare parts, including but not limited to engine components, brakes, suspension parts, electrical components, and more. Browse our catalog for a complete list.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer2')">2. Are your spare parts compatible with my vehicle?</div>
+            <div class="faq-answer" id="answer2">Our spare parts are compatible with a variety of makes and models. To ensure compatibility, please use our vehicle lookup tool on the product pages or contact our customer support team for assistance.</div>
+        </div>
+
+        <!-- Add more FAQ items following the same structure -->
+    </div>
+
+    <script>
+        // JavaScript function to toggle the display of answers
+        function toggleAnswer(id) {
+            var answer = document.getElementById(id);
+            if (answer.style.display === "block") {
+                answer.style.display = "none";
+            } else {
+                answer.style.display = "block";
+            }
+        }
+    </script>
+
+  
+    
+
+
+    </div>
+  </div>
+
+      
       
       <div class="sidebar open">
     
@@ -245,6 +340,23 @@ body {
         next.addClass('active');
       }, 2000);
     });
+
+
+        const items = document.querySelectorAll(".accordion button");
+
+function toggleAccordion() {
+  const itemToggle = this.getAttribute('aria-expanded');
+  
+  for (i = 0; i < items.length; i++) {
+    items[i].setAttribute('aria-expanded', 'false');
+  }
+  
+  if (itemToggle == 'false') {
+    this.setAttribute('aria-expanded', 'true');
+  }
+}
+
+items.forEach(item => item.addEventListener('click', toggleAccordion));
   </script>
 
     </html>
