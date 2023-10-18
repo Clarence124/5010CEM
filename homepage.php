@@ -2,8 +2,15 @@
 <html>
 <head>
   <title>Riders Paradise</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Quicksand&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,12 +21,12 @@
 
     /* Default styles */
 body {
-  margin: 0;
-  padding: 0;
+  
   background: url("bghomepage.png");
   background-size: cover;
-  font-family: 'Kalam', cursive;
+  font-family: 'Lato', sans-serif;
   font-weight: 600;
+  background-attachment: fixed;
 
 }
 .sidebar {
@@ -196,10 +203,11 @@ margin-left: 35%;
     opacity: 1;
   }
 
-  
+
 .content .container {
   text-align: center; /* Center the text within the container */
   background-color: #fff;
+  padding: 20;
 }
 
 .content .container .title h1{
@@ -226,14 +234,28 @@ margin-left: 35%;
 .faq-question {
    cursor: pointer;
    font-weight: bold;
+   font-size: 20px;
         }
 
 .faq-answer {
     display: none;
     margin-top: 10px;
-    font-weight: 300;
+    font-weight: 450;
+    font-size: 18px;
   }
 
+.content .aboutus{
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 30;
+  
+}
+.content .aboutus .aboutusdetails{
+  padding: 0px 75px 0px 75px;
+  font-size: 20px;
+  
+}
 
     </style>
 
@@ -241,7 +263,7 @@ margin-left: 35%;
 
       <div class="marquee">
         
-        <marquee scrollamount="16"><h1>hi</h1></marquee>
+        <marquee scrollamount="16"><h1>Stay Safe on the Road - Check Your Brakes Regularly!</h1></marquee>
                    
         </div>
         
@@ -255,7 +277,18 @@ margin-left: 35%;
         
         <div class="aboutus">
           
-          about us here
+         <h1> Welcome to Riders Paradise - Your Ultimate Destination for Quality Motorcycle Spare Parts and Accessories!</h1>
+          
+          <div class="aboutusdetails">
+
+
+      <p>Our passion for riding drives us to provide top-notch products, meticulously selected and tested to meet your standards.</p> 
+      
+      <p>We're more than just an online store; we're a vibrant community dedicated to enhancing your riding experience and keeping your motorcycle in peak condition.</p> 
+      
+      <p>Join us for an unforgettable journey on the open road, knowing that Riders Paradise has your back!</p>
+  
+          </div>
         </div>
 
 
@@ -274,8 +307,19 @@ margin-left: 35%;
             <div class="faq-question" onclick="toggleAnswer('answer2')">2. Are your spare parts compatible with my vehicle?</div>
             <div class="faq-answer" id="answer2">Our spare parts are compatible with a variety of makes and models. To ensure compatibility, please use our vehicle lookup tool on the product pages or contact our customer support team for assistance.</div>
         </div>
-
-        <!-- Add more FAQ items following the same structure -->
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer3')">3. How can I find the specific part I need?</div>
+            <div class="faq-answer" id="answer3">You can use our search bar to enter keywords, part numbers, or browse through our categories. Additionally, you can filter products by make, model, and year for a more targeted search.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer4')">4. How can I contact your customer support team?</div>
+            <div class="faq-answer" id="answer4">You can reach our customer support team by contacting us. We're available via email, phone, and live chat during our business hours.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer('answer5')">5. How do I know if a part is in stock?</div>
+            <div class="faq-answer" id="answer5">
+- On each product page, you'll find real-time stock availability information. If a product is out of stock, you can sign up for notifications to be alerted when it becomes available again.</div>
+        </div>
     </div>
 
     <script>
@@ -295,8 +339,34 @@ margin-left: 35%;
 
 
     </div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div id="accessoryChart"></div>
+
+    <script>
+        // Sample data (replace with your actual data)
+        var accessories = ["Helmets", "Jackets", "Gloves", "GoPro Cameras", "Handlebar Locks"];
+        var sales = [250, 120, 180, 90, 60];
+
+        // Create a pie chart using Plotly
+        var data = [{
+            labels: accessories,
+            values: sales,
+            type: 'pie'
+        }];
+
+        var layout = {
+            title: 'Motorcycle Accessory Sales'
+        };
+
+        Plotly.newPlot('accessoryChart', data, layout);
+    </script>
+
+
+
   </div>
 
+    
       
       
       <div class="sidebar open">

@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <title>Registration</title>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Quicksand&display=swap" rel="stylesheet">
-     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+     
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
 
      <style type="text/css">
 
       body{
     background: url("bikelogin4.png");
     background-size: cover;
-    font-family: 'Kalam', cursive;
+    font-family: 'Lato', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;

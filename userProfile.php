@@ -3,7 +3,9 @@
 <head>
   <title>Profile</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,7 +29,7 @@ body {
   padding: 0;
   background: url("bikelogin4.png");
   background-size: cover;
-  font-family: 'Kalam', cursive;
+  font-family: 'Lato', sans-serif;
   font-weight: 600;
 
 }
