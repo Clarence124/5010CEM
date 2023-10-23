@@ -1,20 +1,17 @@
 
 <html>
 <head>
+
   <title>Riders Paradise</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <style type="text/css">
 
@@ -257,6 +254,12 @@ margin-left: 35%;
   
 }
 
+#accessoryChart {
+    margin-top: 20px; /* Adjust the margin as needed to position the chart below other content */
+    background-color: #fff; /* Set a background color to make the chart stand out */
+    padding: 20px; /* Add padding to the chart for spacing */
+}
+
     </style>
 
     <body>
@@ -333,63 +336,33 @@ margin-left: 35%;
             }
         }
     </script>
-
-  
     
-
-
     </div>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <div id="accessoryChart"></div>
 
-<div id="accessoryChart"></div>
-
-    <script>
-        // Sample data (replace with your actual data)
-        var accessories = ["Helmets", "Jackets", "Gloves", "GoPro Cameras", "Handlebar Locks"];
-        var sales = [250, 120, 180, 90, 60];
-
-        // Create a pie chart using Plotly
-        var data = [{
-            labels: accessories,
-            values: sales,
-            type: 'pie'
-        }];
-
-        var layout = {
-            title: 'Motorcycle Accessory Sales'
-        };
-
-        Plotly.newPlot('accessoryChart', data, layout);
-    </script>
 
 
 
   </div>
 
-    
-      
+        
       
       <div class="sidebar open">
-    
-    <ul>
-      <center>
-      <li><h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i></li>
-      <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
-      <li><a href="userProfile.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span><div class="item">Profile</div></a></li>
-      <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span><div class="item">Spare Parts</div></a></li>
-      <li><a href="#"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span><div class="item">Accessories</div></a></li>
-      <li><a href="#"><i class="fas fa-money-check-alt"></i><span class="tooltip">Payment</span><div class="item">Payment</div></a></li>
-      <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span><div class="item">Logout</div></a></li> 
-      </center>
-    </ul>
-  </div>
+        <ul>
+            <center>
+          <li><h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i></li>
+          <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
+          <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span><div class="item">Settings</div></a></li>
+          <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span><div class="item">Spare Parts</div></a></li>
+          <li><a href="#"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span><div class="item">Accessories</div></a></li>
+          <li><a href="#"><i class="fas fa-money-check-alt"></i><span class="tooltip">Payment</span><div class="item">Payment</div></a></li>
+          <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span><div class="item">Logout</div></a></li> 
+            </center>
+        </ul>
+      </div>
 
-  
-
-
-
-    </body>
-    <script>
+<script>
     $(document).ready(function() {
       // Toggle sidebar open and closed
       $('#btn').click(function() {
@@ -428,5 +401,47 @@ function toggleAccordion() {
 
 items.forEach(item => item.addEventListener('click', toggleAccordion));
   </script>
+  
 
+
+<script>
+    // Fetch data from your MySQL database using PHP
+    <?php
+        // Include your database connection file
+        include 'db_testingriders.php';
+
+        // Query to retrieve sales data
+        $sql = "SELECT `product_name`, `sales_amount` FROM `stock`";
+        $result = mysqli_query($conn, $sql);
+
+        // Create arrays to store the data
+        $accessories = [];
+        $sales = [];
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $accessories[] = $row["product_name"];
+                $sales[] = $row["sales_amount"];
+            }
+        }
+    ?>
+
+    // Create a pie chart using Plotly with the fetched data
+    var accessories = <?php echo json_encode($accessories); ?>;
+    var sales = <?php echo json_encode($sales); ?>;
+
+    var data = [{
+        labels: accessories,
+        values: sales,
+        type: 'pie'
+    }];
+
+    var layout = {
+        title: 'Motorcycle Accessory Sales'
+    };
+
+    Plotly.newPlot('accessoryChart', data, layout);
+</script>
+
+    </body>
     </html>
