@@ -2,13 +2,17 @@
 include 'db_studentUsers.php';
 session_start();
 
-$productId = 1;
+$productId = "H001";
 
-$sql = "SELECT product_id, filepath, product_name,product_discount, discount_percent, product_price, stock_amount, product_color,product_size,product_quantity, product_desc, product_speci, product_rating FROM product WHERE product_id = $productId";
+$sql = "SELECT product_id,product_name, discount_price,  stock_amount, product_color,product_size,product_quantity, product_desc, product_rating FROM helmet where product_id = '$productId'";
 $result = $conn->query($sql);
 
 if ($result === false) {
     die("Error: " . $conn->error);
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = []; // Initialize an empty cart
 }
 
 ?>
@@ -27,6 +31,7 @@ if ($result === false) {
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
 
     <style type="text/css">
@@ -464,12 +469,18 @@ if ($result === false) {
 
         .product-price {
             font-size: 18px;
-            display:flex;
-            align-items:center;
+            display: flex;
+            align-items: center;
         }
 
+        .button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button,
         .buy-now-button {
-            display: block;
+            display: inline-block;
             /* Make it a block-level element */
             margin-top: 10px;
             /* Adjust the margin to control spacing */
@@ -547,9 +558,10 @@ if ($result === false) {
             font-size: 14px;
             color: #666;
             font-weight: bold;
-            position: absolute ;
-            top:395px;
-            right:380px;;
+            position: absolute;
+            top: 355px;
+            right: 380px;
+
         }
 
         .quantity-button.plus {
@@ -560,25 +572,135 @@ if ($result === false) {
             text-decoration: line-through;
             color: #888;
             font-size: 15px;
-            margin-right:10px;
+            margin-right: 10px;
         }
 
-        .discounted-price{
-            margin-right:10px;           
-            display:flex;
+        .discounted-price {
+            margin-right: 10px;
+            display: flex;
             font-weight: bold;
             color: #E74C3C;
-            position:relative;
-            top: 235px;
-            right:360px;
+            position: relative;
+            top: -49px;
+            right: -160px;
+
         }
 
         .discount-percent {
-            margin-right:10px;           
-            display:flex;
+            margin-right: 10px;
+            display: flex;
             font-weight: bold;
             color: #E74C3C;
+            position: static;
+            top: -90px;
+            right: -400px;
             font-size: 10px;
+            padding-left: 10px;
+        }
+
+        .shopping {
+            position: relative;
+            text-align: right;
+        }
+
+        .shopping img {
+            width: 25px;
+            position: relative;
+            left: -20px;
+        }
+
+        .shopping span {
+            background: red;
+            border-radius: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: absolute;
+            top: -6px;
+            left: -20%;
+            right: 40px;
+            font-size: 10px;
+            padding: 3px 10px;
+        }
+
+        .card {
+            position: fixed;
+            top: 0;
+            left: 100%;
+            width: 500px;
+            background-color: #453E3B;
+            height: 100vh;
+            transition: 0.5s;
+        }
+
+        .active .card {
+            left: calc(100% - 500px);
+        }
+
+        .active .container {
+            transform: translateX(-200px);
+        }
+
+        .card h1 {
+            color: #E8BC0E;
+            font-weight: 100;
+            margin: 0;
+            padding: 0 20px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card .checkOut {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+
+        .card .checkOut div {
+            background-color: #E8BC0E;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .card .checkOut div:nth-child(2) {
+            background-color: #1C1F25;
+            color: #fff;
+        }
+
+        .listCard li {
+            display: grid;
+            grid-template-columns: 100px repeat(3, 1fr);
+            color: #fff;
+            row-gap: 10px;
+        }
+
+        .listCard li div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .listCard li img {
+            width: 90%;
+        }
+
+        .listCard li button {
+            background-color: #fff5;
+            border: none;
+        }
+
+        .listCard .count {
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -621,40 +743,24 @@ if ($result === false) {
                 <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
             </div>
             <h2>Accessories</h2>
-            <button id="addToCartButton"><i class="bx bx-cart"></i> Add to Cart</button>
+            <div class="shopping">
+                <img src="pictures/shopping.svg">
+                <span class="quantity">0</span>
+            </div>
         </div>
-        <div id="cartContainer"></div>
 
         <div class="images">
             <?php
             while ($row = $result->fetch_assoc()) {
                 $productId = $row["product_id"];
                 $productName = $row["product_name"];
-                $productPrice = $row["product_price"];
                 $productQuantity = $row["product_quantity"];
-                $discountPrice = $row["product_discount"];
-                $discountPercent = $row["discount_percent"];
+                $discountPercent = $row["discount_price"];
                 $productStockAmount = $row["stock_amount"];
                 $productDescription = $row["product_desc"];
-                $productSpecification = $row["product_speci"];
                 $productRating = $row["product_rating"];
                 $productSize = $row["product_size"];
                 $productColorOptions = explode(', ', $row["product_color"]);
-
-                $productSpecs = explode(', ', $row["product_speci"]);
-
-
-                $orderedSpecs = [];
-
-                foreach ($productSpecs as $spec) {
-                    list($key, $value) = explode(': ', $spec, 2); 
-                    $orderedSpecs[$key] = $value;
-                }
-
-                $category = $orderedSpecs["Category"];
-
-
-
 
                 ?>
                 <!-- Display the product information -->
@@ -685,12 +791,8 @@ if ($result === false) {
                         </h1>
 
                         <p class="product-price">
-                        <h2 class="original-price-strikethrough">
-                            <?= $productPrice ?>
-                        </h2>
-                        <h2 class="discounted-price">
-                            <?= $discountPrice ?>
-                        </h2>
+                        <h2 class="original-price-strikethrough" id="originalPrice">RM100.00-RM120.00</h2>
+                        <h2 class="discounted-price" id="discountPrice">RM80.00-RM100.00</h2>
                         <h2 class="discount-percent">
                             <?= $discountPercent ?>
                         </h2>
@@ -721,13 +823,10 @@ if ($result === false) {
                             <!-- Add more size options here -->
                         </select>
 
-                        <button type="button" class="buy-now-button">Buy now</button>
-
-                        <h2>Specifications</h2>
-                        <p>
-                            <?= $productSpecification ?>
-                        </p>
-
+                        <div class="button-container">
+                            <button type="button" class="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
+                            <button type="button" class="buy-now-button">Buy now</button>
+                        </div>
 
                         <h2>Description</h2>
                         <p>
@@ -743,7 +842,8 @@ if ($result === false) {
                             <i class="bx bx-star"></i>
                             <?= $productRating ?>
                         </div>
-                        <button type="button" class="write-review">Write review</button>
+                        <button type="button" id="view_ratings" class="btn btn-primary">View Ratings</button>
+
 
                     </div>
 
@@ -751,16 +851,26 @@ if ($result === false) {
                     <form class=" edit-form" style="display: none;">
                         <input type="text" name="newProductName" value="<?= $productName ?>">
                         <input type="text" name="newProductPrice" value="<?= $productPrice ?>">
-                        <input type="text" name="newProductSpecification" value="<?= $productSpecification ?>">
                         <input type="text" name="newProductDescription" value="<?= $productDescription ?>">
 
                         <button type="button" class="save-button">Save</button>
 
                     </form>
                 </div>
+
                 <?php
             }
             ?>
+        </div>
+
+        <div class="card">
+            <h1>Add to Cart</h1>
+            <ul class="listCard">
+            </ul>
+            <div class="checkOut">
+                <div class="total">0</div>
+                <div class="closeShopping">Close</div>
+            </div>
         </div>
 
 
@@ -814,7 +924,7 @@ if ($result === false) {
                 img.src = img_meta.src;
             };
         });
-        // Hide the image popup container, but only if the user clicks outside the image
+
         image_popup.onclick = e => {
             if (e.target.className == 'image-popup') {
                 image_popup.style.display = "none";
@@ -1013,19 +1123,20 @@ if ($result === false) {
         function updatePrice() {
             const colorSelector = document.getElementById('colorSelector');
             const sizeSelector = document.getElementById('sizeSelector');
-            const priceDisplay = document.getElementById('priceDisplay');
+            const originalPriceDisplay = document.getElementById('originalPrice');
+            const discountPriceDisplay = document.getElementById('discountPrice');
 
             // Define price adjustments based on color and size
             const priceMap = {
                 'Black': {
-                    'S': 100.00,
-                    'M': 110.00,
-                    'L': 120.00
+                    'S': { original: 100.00, discounted: 80.00 },
+                    'M': { original: 110.00, discounted: 90.00 },
+                    'L': { original: 120.00, discounted: 100.00 },
                 },
                 'Red': {
-                    'S': 105.00,
-                    'M': 115.00,
-                    'L': 125.00
+                    'S': { original: 105.00, discounted: 85.00 },
+                    'M': { original: 115.00, discounted: 95.00 },
+                    'L': { original: 125.00, discounted: 105.00 },
                 },
                 // Add more color and size price adjustments here
             };
@@ -1033,86 +1144,18 @@ if ($result === false) {
             const selectedColor = colorSelector.value;
             const selectedSize = sizeSelector.value;
 
-            // Get the price from the priceMap
-            const selectedPrice = priceMap[selectedColor][selectedSize];
+            // Get the price adjustments from the priceMap
+            const priceAdjustments = priceMap[selectedColor][selectedSize];
 
-            // Display the updated price
-            priceDisplay.textContent = 'RM ' + selectedPrice.toFixed(2);
+            // Display the updated prices
+            originalPriceDisplay.textContent = 'RM ' + priceAdjustments.original.toFixed(2);
+            discountPriceDisplay.textContent = 'RM ' + priceAdjustments.discounted.toFixed(2);
         }
+
+
 
     </script>
 
-    <script>
-        const cart = []; // Initialize an empty cart array
-
-        // Event listener for "Add to Cart" button
-        document.getElementById('addToCartButton').addEventListener('click', () => {
-
-            const productDetails = {
-                name: 'Product Name',
-                price: 100.00, // Replace with the actual product price
-                quantity: parseInt(document.querySelector('.quantity-input').value),
-                color: 'Selected Color', // Replace with the actual selected color
-                image: '' // Replace with the actual image URL
-            };
-
-            // Add the product to the cart
-            cart.push(productDetails);
-
-            // Update the cart container
-            updateCartContainer();
-        });
-
-        // Function to update the cart container
-        function updateCartContainer() {
-            const cartContainer = document.getElementById('cartContainer');
-
-            // Clear the cart container
-            cartContainer.innerHTML = '';
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = 'Your cart is empty.';
-                return;
-            }
-
-            // Create a table to display cart items
-            const table = document.createElement('table');
-            table.innerHTML = `
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-        </tr>
-        `;
-
-            let totalCartPrice = 0;
-
-            cart.forEach((item) => {
-                const row = table.insertRow();
-                row.innerHTML = `
-                <td><img src="${item.image}" alt="${item.name}" width="50"></td>
-                <td>${item.name}</td>
-                <td>RM ${item.price.toFixed(2)}</td>
-                <td>${item.quantity}</td>
-                <td>RM ${(item.price * item.quantity).toFixed(2)}</td>
-                `;
-
-                totalCartPrice += item.price * item.quantity;
-            });
-
-            // Display the total price
-            const totalRow = table.insertRow();
-            totalRow.innerHTML = `<td colspan="4"><b>Total:</b></td>
-        <td><b>RM ${totalCartPrice.toFixed(2)}</b></td>`;
-
-            cartContainer.appendChild(table);
-        }
-
-        updateCartContainer();
-
-    </script>
 
     <script>
         const quantityInput = document.querySelector('.quantity-input');
@@ -1140,6 +1183,173 @@ if ($result === false) {
                 updateStockAndInput();
             }
         });
+    </script>
+
+    <script>
+        let openShopping = document.querySelector('.shopping');
+        let closeShopping = document.querySelector('.closeShopping');
+        let list = document.querySelector('.list');
+        let listCard = document.querySelector('.listCard');
+        let body = document.querySelector('body');
+        let total = document.querySelector('.total');
+        let quantity = document.querySelector('.quantity');
+
+        openShopping.addEventListener('click', () => {
+            body.classList.add('active');
+        })
+        closeShopping.addEventListener('click', () => {
+            body.classList.remove('active');
+        })
+
+        let products = [
+            {
+                id: 'H001',
+                name: 'PRODUCT NAME 1',
+                image: 'pictures/AD helmet.jpeg',
+                price: '95.00'
+            },
+
+        ];
+        let listCards = [];
+
+        function addToCart() {
+            // Get selected product details from the page
+            const mainImage = document.getElementById('mainImage').src;
+            const productName = document.querySelector('.product-title').textContent;
+            const discountPrice = parseFloat(document.getElementById('discountPrice').textContent);
+            const quantity = parseInt(document.querySelector('.quantity-input').value);
+            const color = document.getElementById('colorSelector').value;
+            const size = document.getElementById('sizeSelector').value;
+
+            if (isNaN(discountPrice)) {
+                // Handle cases where discountPrice is not a valid number, e.g., "RM85.00"
+                const priceParts = discountPrice.split('RM');
+                if (priceParts.length === 2) {
+                    discountPrice = parseFloat(priceParts[1]);
+                } else {
+                    // Handle other cases here as needed
+                }
+            }
+
+            // Create a new item for the cart
+            const newItem = {
+                image: mainImage,
+                name: productName,
+                price: discountPrice,
+                quantity: quantity,
+                color: color,
+                size: size,
+            };
+
+            // Add the item to the cart
+            listCards.push(newItem);
+
+            // Refresh the cart display
+            reloadCard();
+        }
+
+        // Define the "reloadCard" function to display cart contents and total
+        function reloadCard() {
+            listCard.innerHTML = '';
+            let totalPrice = 0;
+            let totalQuantity = 0;
+
+            listCards.forEach((item, index) => {
+                if (item) {
+                    const itemTotal = item.price * item.quantity;
+
+                    let newDiv = document.createElement('li');
+                    newDiv.innerHTML = `
+                <div><img src="${item.image}" /></div>
+                <div>${item.name}</div>
+                <div>RM ${item.price.toLocaleString()}</div>
+                <div class="quantity-actions">
+                    <button onclick="changeQuantity(${index}, ${item.quantity - 1})">-</button>
+                    <div class="count">${item.quantity}</div>
+                    <button onclick="changeQuantity(${index}, ${item.quantity + 1})">+</button>
+                </div>
+            `;
+                    listCard.appendChild(newDiv);
+                    totalPrice += itemTotal;
+                    totalQuantity += item.quantity;
+                }
+            });
+
+
+            // Update the total and quantity display
+            total.innerText = 'Total: RM ' + totalPrice.toFixed(2);
+            quantity.innerText = totalQuantity;
+        }
+
+        function changeQuantity(key, quantity) {
+            if (quantity == 0) {
+                delete listCards[key];
+            } else if (quantity > 0) {
+                if (listCards[key]) {
+                    listCards[key].quantity = quantity;
+                    listCards[key].price = parseFloat(products[key].price) * quantity;
+                }
+            }
+            reloadCard();
+        }
+    </script>
+
+    <script>
+        // Assuming you have a product ID available as $productId
+        const productId = 'H001';
+
+        document.getElementById('view_ratings').addEventListener('click', function () {
+            // Redirect to the "rating.php" page with the product identifier as a query parameter
+            window.location.href = `rating.php?product=${productId}`;
+        });
+    </script>
+
+    <script>
+        function addToCart() {
+            // Get selected product details from the page
+            const mainImage = document.getElementById('mainImage').src;
+            const productName = document.querySelector('.product-title').textContent;
+            const discountPrice = document.getElementById('discountPrice').textContent;
+            const quantity = parseInt(document.querySelector('.quantity-input').value);
+            const color = document.getElementById('colorSelector').value;
+            const size = document.getElementById('sizeSelector').value;
+
+            // Create a new item for the cart
+            const newItem = {
+                image: mainImage,
+                name: productName,
+                price: discountPrice,
+                quantity: quantity,
+                color: color,
+                size: size,
+            };
+
+            // Add the item to the cart
+            listCards.push(newItem);
+
+            // Refresh the cart display
+            reloadCard();
+        }
+
+    </script>
+
+    <script>
+        // AJAX request example (using jQuery)
+        $.ajax({
+            type: "POST",
+            url: "add_to_cart.php",
+            data: {
+                productId: "H001",
+                productName: "AD Helmet",
+                price: 95.00,
+                quantity: 1,
+                // ... other product data
+            },
+            success: function (response) {
+                // Handle the response, e.g., update the cart UI
+            }
+        });
+
     </script>
 
 
