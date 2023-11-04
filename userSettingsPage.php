@@ -18,7 +18,6 @@ $id=$_SESSION['id'];
 $query=mysqli_query($conn,"SELECT * FROM userlogin where id='$id'")or die(mysqli_error());
 $row=mysqli_fetch_array($query);
 
-
 ?>  
 
   <style type="text/css">
@@ -340,6 +339,22 @@ button:hover {
   background-color: #e2e2e2;
 }
 
+
+/* Add this CSS to style the two-column layout */
+.form-columns {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Adjust the spacing between columns */
+}
+
+.form-column {
+  flex: 1;
+  margin-right: 10px; /* Adjust the spacing between columns */
+}
+
+/* Rest of your existing CSS styles... */
+
+
   
 </style>
 
@@ -428,8 +443,11 @@ button:hover {
       <br>
           <div class="form-group">
             
-            <input type="submit" name="submit" class="submit" style="width:20em; margin:0;"/></br></br>
-          </div>
+            <input type="submit" name="submit" class="submit" style="width:20em; margin:0;">
+          </div>   
+
+          </br></br>
+
         </form>
       </div>
 
@@ -470,61 +488,116 @@ button:hover {
 
 
 
-    <div id="PaymentDetailsTab" class="tab">
+<!-- ... (Previous HTML content) ... -->
+<div id="PaymentDetailsTab" class="tab">
   <div class="payment-details-container">
     <h2>Payment Details</h2>
-    <form id="payment-form">
-      <div class="form-group">
-        <label for="card-number">Card Number (16 digits):</label>
-        <input type="text" id="card-number" placeholder="Enter your card number" required pattern="\d{16}" title="Card number must be 16 digits">
-      </div>
-      <div class="form-group">
-        <label for="card-holder">Cardholder Name:</label>
-        <input type="text" id="card-holder" placeholder="Enter cardholder name" required>
-      </div>
-      <div class="form-group">
-        <label for="expiration">Expiration Date (MM/YY):</label>
-        <select id="expiration-month" required>
-          <option value="" disabled selected>Select Month</option>
-          <!-- Add month options -->
-          <option>01</option>
-          <option>02</option>
-          <option>03</option>
-          <option>04</option>
-          <option>05</option>
-          <option>06</option>
-          <option>07</option>
-          <option>08</option>
-          <option>09</option>
-          <option>10</option>
-          <option>11</option>
-          <option>12</option>
-        </select>
-        <select id="expiration-year" required>
-          <option value="" disabled selected>Select Year</option>
-          <!-- Add year options -->
-          <option>23</option>
-          <option>24</option>
-          <option>25</option>
-          <option>26</option>
-          <option>27</option>
-          <option>28</option>
-          <option>29</option>
-          <option>30</option>
-          <option>31</option>
-          <option>32</option>
-          <option>33</option>
+    <form id="payment-form" action="userPaymentCheck.php" method="post">
+      <?php
+        include 'db_riders.php';
+        $id = $_SESSION['id'];
+        
+        $query = mysqli_query($conn, "SELECT * FROM userpaymentdetails where id='$id'");
+        $paymentRow = mysqli_fetch_array($query);
 
-        </select>
+        // Check if payment details were found
+        if ($paymentRow) {
+      ?>
+      <div class="form-columns">
+        <div class="form-column">
+          <div class="Paymentdetails">
+            <div class="form-group">
+              <label for="card-number">Card Number (16 digits):</label>
+              <input type="text" id="cardnum" class="cardnum" name="cardnum" placeholder="Enter your card number" pattern="\d{16}" title="Card number must be 16 digits" value="<?php echo $paymentRow['cardnum']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="card-holder">Cardholder Name:</label>
+              <input type="text" id="cardname" class="cardname" name="cardname" placeholder="Enter cardholder name" value="<?php echo $paymentRow['cardname']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="expiration">Expiration Date (MM/YY):</label>
+              <select id="expmonth" class="expmonth" name="expmonth">
+                <option value="<?php echo $paymentRow['expmonth']; ?>" disabled selected><?php echo $paymentRow['expmonth']; ?></option>
+                <!-- Other options here -->
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option> 
+                  <option value="12">12</option>
+              </select>
+              <select id="expyear" class="expyear" name="expyear">
+                <option value="<?php echo $paymentRow['expyear']; ?>" disabled selected><?php echo $paymentRow['expyear']; ?></option>
+                <!-- Other options here -->
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                  <option value="32">32</option>
+                  <option value="33">33</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cvv">CVV (3 digits):</label>
+              <input type="text" id="cvvcode" class="cvvcode" name="cvvcode" placeholder="Enter CVV" pattern="\d{3}" title="CVV must be 3 digits" value="<?php echo $paymentRow['cvvcode']; ?>">
+            </div>
+          </div>
+        </div>
+        <div class="form-column">
+          <div class="BillingAddress">
+            <div class="form-group">
+              <label for="fullname">Full Name:</label>
+              <input type="text" id="fullname" class="fullname" name="fullname" placeholder="Enter your full name" value="<?php echo $paymentRow['fullname']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="text" id="email" class="email" name="email" placeholder="Enter your email" value="<?php echo $paymentRow['email']; ?>">
+            </div>
+            <div class= "form-group">
+              <label for="address">Address:</label>
+              <input type="text" id="address" class="address" name="address" placeholder="Enter your address" value="<?php echo $paymentRow['address']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" id="city" class="city" name="city" placeholder="Enter your city" value="<?php echo $paymentRow['city']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input type="text" id="state" class="state" name="state" placeholder="Enter your state" value="<?php echo $paymentRow['state']; ?>">
+            </div>
+            <div class="form-group">
+              <label for="zip">Zip Code:</label>
+              <input type="text" id="zip" class="zip" name="zip" placeholder="Enter your zip code" value="<?php echo $paymentRow['zip']; ?>">
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="cvv">CVV (3 digits):</label>
-        <input type="text" id="cvv" placeholder="Enter CVV" required pattern="\d{3}" title="CVV must be 3 digits">
-      </div>
-      <button type="submit">Save Payment Details</button>
-    </form>
-  </div>
+      <button type="submit" name="updatePaymentDetails" class="updatePaymentDetails">Update Payment Details</button>
+      </form>
+      <?php
+        } else {
+          // No payment details found
+          echo "No payment details found. Please insert payment details.";
+      ?>
+      <button type="button" onclick="window.location.href = 'newPaymentDetails.php';">Insert Payment Details</button>
+      <?php
+        }
+      ?>
+    </div>
 </div>
+
+<!-- ... (Remaining HTML content) ... -->
 
 
 
@@ -534,6 +607,7 @@ button:hover {
 
     </div>
     
+
       <?php
       if(isset($_POST['submit'])){
         $fullname = $_POST['fullname'];
@@ -553,7 +627,7 @@ button:hover {
                     ?>
                      <script type="text/javascript">
             alert("Update Successful.");
-            window.location = "userProfile.php";
+            window.location = "userSettingsPage.php";
         </script>
         <?php
              }
