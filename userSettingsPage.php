@@ -108,12 +108,11 @@ body {
 }
 .sidebar.closed a .item{
   justify-content: center;
-   
+   display: none;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
 }
-
 .sidebar.closed a i {
   margin-right: 0;
 }
@@ -124,17 +123,10 @@ body {
 }
 
 .sidebar.closed h3 {
-  justify-content: center;
-   
-    text-indent: 100%;
-    white-space: nowrap;
-    overflow: hidden;
+  overflow: hidden;
+  text-align: center;
 }
 
-.sidebar.closed h3 i {
- margin-right: 0;
- display: flex;
-}
 
 .sidebar.closed a span.tooltip {
   opacity: 0;
@@ -150,8 +142,6 @@ body {
   margin-right: 0;
   font-size: 24px;
 }
-
-
 
 
 
@@ -275,6 +265,81 @@ form .form-group{
     background-color: #1b6ca8;
   }
 
+/* CSS for Payment Details Form */
+.payment-details-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.payment-details-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1b6ca8;
+}
+
+.order-history-container {
+  background: linear-gradient(120deg, #f6d365, #fda085);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.order-history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-history-table th {
+  background: #3498db;
+  color: #fff;
+}
+
+.order-history-table th, .order-history-table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.order-history-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.order-history-table tbody tr:nth-child(even) {
+  background-color: #e2e2e2;
+}
+
   
 </style>
 
@@ -285,17 +350,17 @@ form .form-group{
 <body>
 
   <div class="sidebar open">
-    
-    <ul>
-      <h3>Menu<i class='bx bx-menu menu-icon' id="btn"></i></h3>
-      <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
-      <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span><div class="item">Settings</div></a></li>
-      <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span><div class="item">Spare Parts</div></a></li>
-      <li><a href="#"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span><div class="item">Accessories</div></a></li>
-      <li><a href="#"><i class="fas fa-money-check-alt"></i><span class="tooltip">Payment</span><div class="item"> Payment</div></a></li>
-      <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span><div class="item">Logout</div></a></li> 
-    </ul>
-  </div>
+        <ul>
+            <center>
+          <li><h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i></li>
+          <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
+          <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span><div class="item">Settings</div></a></li>
+          <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span><div class="item">Spare Parts</div></a></li>
+          <li><a href="#"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span><div class="item">Accessories</div></a></li>
+          <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span><div class="item">Logout</div></a></li> 
+            </center>
+        </ul>
+      </div>
 
   <div class="content">
 
@@ -307,9 +372,9 @@ form .form-group{
       </div>
       
 
-      <button class="tab-button" onclick="openTab('ProfileTab')">Profile</button>
-      <button class="tab-button" onclick="openTab('OrderHistoryTab')">Order History</button>
-      <button class="tab-button" onclick="openTab('PaymentDetailsTab')">Payment Details</button>
+      <button class="tab-button" onclick="openTab('ProfileTab')"><i class="fa-regular fa-address-card fa-beat"></i> Profile</button>
+      <button class="tab-button" onclick="openTab('OrderHistoryTab')"><i class="fa-solid fa-cart-shopping fa-beat"></i> Order History</button>
+      <button class="tab-button" onclick="openTab('PaymentDetailsTab')"> <i class="fas fa-money-check fa-beat"></i> Payment Details</button>
     
     </div>
       <br>
@@ -369,23 +434,99 @@ form .form-group{
       </div>
 
       <div id="OrderHistoryTab" class="tab">
-      <!-- Order History content -->
-      <div class="profdetails">
-          <h1> this is Testing </h1>
+  <!-- Order History content -->
+  <div class="order-history-container">
+    <h2>Order History</h2>
+    <table class="order-history-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Product Name</th>
+          <th>Product Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2023-01-15 10:30:45</td>
+          <td>Product A</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>2023-02-20 14:15:30</td>
+          <td>Product B</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>2023-03-05 16:45:22</td>
+          <td>Product C</td>
+          <td>1</td>
+        </tr>
+        <!-- Add more rows with actual order history data -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
-      </div>
 
-    </div>
+
 
     <div id="PaymentDetailsTab" class="tab">
-      <!-- Payment Details content -->
-
-      <div class="profdetails">
-        
-          <h2> I am Viknes</h2>
+  <div class="payment-details-container">
+    <h2>Payment Details</h2>
+    <form id="payment-form">
+      <div class="form-group">
+        <label for="card-number">Card Number (16 digits):</label>
+        <input type="text" id="card-number" placeholder="Enter your card number" required pattern="\d{16}" title="Card number must be 16 digits">
       </div>
+      <div class="form-group">
+        <label for="card-holder">Cardholder Name:</label>
+        <input type="text" id="card-holder" placeholder="Enter cardholder name" required>
+      </div>
+      <div class="form-group">
+        <label for="expiration">Expiration Date (MM/YY):</label>
+        <select id="expiration-month" required>
+          <option value="" disabled selected>Select Month</option>
+          <!-- Add month options -->
+          <option>01</option>
+          <option>02</option>
+          <option>03</option>
+          <option>04</option>
+          <option>05</option>
+          <option>06</option>
+          <option>07</option>
+          <option>08</option>
+          <option>09</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+        </select>
+        <select id="expiration-year" required>
+          <option value="" disabled selected>Select Year</option>
+          <!-- Add year options -->
+          <option>23</option>
+          <option>24</option>
+          <option>25</option>
+          <option>26</option>
+          <option>27</option>
+          <option>28</option>
+          <option>29</option>
+          <option>30</option>
+          <option>31</option>
+          <option>32</option>
+          <option>33</option>
 
-    </div>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="cvv">CVV (3 digits):</label>
+        <input type="text" id="cvv" placeholder="Enter CVV" required pattern="\d{3}" title="CVV must be 3 digits">
+      </div>
+      <button type="submit">Save Payment Details</button>
+    </form>
+  </div>
+</div>
+
+
 
       </div>
 
@@ -441,6 +582,8 @@ form .form-group{
       // Set the default tab to open when the page loads
       openTab("ProfileTab");
     </script>
+
+
 
 </body>
 

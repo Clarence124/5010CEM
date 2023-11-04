@@ -1,7 +1,9 @@
 
 <html>
 <head>
+<?php session_start();
 
+?>
   <title>Riders Paradise</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -9,11 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
+</head>
     <style type="text/css">
 
 
@@ -229,6 +230,19 @@ margin-left: 35%;
   background: linear-gradient(90deg, rgba(224,55,9,1) 27%, rgba(200,80,235,1) 64%);
 }
 
+.faq-question {
+   cursor: pointer;
+   font-weight: bold;
+   font-size: 20px;
+        }
+
+.faq-answer {
+    display: none;
+    margin-top: 10px;
+    font-weight: 450;
+    font-size: 18px;
+  }
+
 .content .aboutus{
   background-color: #333;
   color: #fff;
@@ -248,48 +262,26 @@ margin-left: 35%;
     padding: 20px; /* Add padding to the chart for spacing */
 }
 
-
-.faq-item {
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.faq-question {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 20px;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.faq-question:hover {
-    background-color: #e0e0e0;
-    transition: background-color 0.3s;
-}
-
-.faq-question .icon {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.faq-answer {
-    display: none;
-    margin-top: 10px;
-    font-weight: 450;
-    font-size: 18px;
-}
-
-
     </style>
 
     <body>
 
       <div class="marquee">
         
-        <marquee scrollamount="16"><h1>Stay Safe on the Road - Check Your Brakes Regularly!</h1></marquee>
+        <marquee scrollamount="16">
+          <h1>Welcome <?php // Check if user is logged in
+                
+                if(isset($_SESSION['uname'])) {
+                $uname = $_SESSION['uname'];
+                echo $uname;
+      } else {
+        // Redirect to login page
+        header("Location: adminLoginPage.php");
+        exit();
+      }
+    ?>
+
+              to Riders Paradise! Stay Safe on the Road - Check Your Brakes Regularly!</h1></marquee>
                    
         </div>
         
@@ -300,75 +292,20 @@ margin-left: 35%;
           <img src="banner2.png" >
         
         </div>
+
+
         
-        <div class="aboutus">
-          
-         <h1> Welcome to Riders Paradise - Your Ultimate Destination for Quality Motorcycle Spare Parts and Accessories!</h1>
-          
-          <div class="aboutusdetails">
-
-
-      <p>Our passion for riding drives us to provide top-notch products, meticulously selected and tested to meet your standards.</p> 
-      
-      <p>We're more than just an online store; we're a vibrant community dedicated to enhancing your riding experience and keeping your motorcycle in peak condition.</p> 
-      
-      <p>Join us for an unforgettable journey on the open road, knowing that Riders Paradise has your back!</p>
-  
-          </div>
-        </div>
-
-
-        <div id="accessoryChart"></div></br>
-
-
         <div class="container">
-    <div class="title"><center><h1>Frequently Asked Questions (FAQ)</h1></center></div>
-    <div class="faq">
-        <div class="faq-item">
-             <div class="faq-question" onclick="toggleAnswer('answer1')">
-              <div class="question-text">1. What types of motor spare parts do you offer?</div><i class="fas fa-plus"></i></div>
-              <div class="faq-answer" id="answer1">We offer a wide range of motor spare parts, including but not limited to engine components, brakes, suspension parts, electrical components, and more. Browse our catalog for a complete list.</div>
-              </div>
+          
 
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer2')">2. Are your spare parts compatible with my vehicle?</div>
-            <div class="faq-answer" id="answer2">Our spare parts are compatible with a variety of makes and models. To ensure compatibility, please use our vehicle lookup tool on the product pages or contact our customer support team for assistance.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer3')">3. How can I find the specific part I need?</div>
-            <div class="faq-answer" id="answer3">You can use our search bar to enter keywords, part numbers, or browse through our categories. Additionally, you can filter products by make, model, and year for a more targeted search.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer4')">4. How can I contact your customer support team?</div>
-            <div class="faq-answer" id="answer4">You can reach our customer support team by contacting us. We're available via email, phone, and live chat during our business hours.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer5')">5. How do I know if a part is in stock?</div>
-            <div class="faq-answer" id="answer5">
-- On each product page, you'll find real-time stock availability information. If a product is out of stock, you can sign up for notifications to be alerted when it becomes available again.</div>
-        </div>
-    </div>
-
-    <script>
-     function toggleAnswer(id) {
-    var answer = document.getElementById(id);
-    var icon = document.querySelector(".faq-question[onclick=\"toggleAnswer('" + id + "')\"] i");
-
-    if (answer.style.display === "block") {
-        answer.style.display = "none";
-        icon.classList.remove('fa-minus');
-        icon.classList.add('fa-plus');
-    } else {
-        answer.style.display = "block";
-        icon.classList.remove('fa-plus');
-        icon.classList.add('fa-minus');
-    }
-}
-
-    </script>
+           <div class="chart" id="salesPieChart"></div>
+          
     
     </div>
     
+   
+
+
 
 
   </div>
@@ -379,8 +316,8 @@ margin-left: 35%;
         <ul>
             <center>
           <li><h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i></li>
-          <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
-          <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span><div class="item">Settings</div></a></li>
+          <li><a href="adminHomepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span><div class="item">Homepage</div></a></li>
+          <li><a href="adminSalesPage.php"><i class="bx bx-cog"></i><span class="tooltip">Sales of the Stocks</span><div class="item">Sales</div></a></li>
           <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span><div class="item">Spare Parts</div></a></li>
           <li><a href="#"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span><div class="item">Accessories</div></a></li>
           <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span><div class="item">Logout</div></a></li> 
@@ -411,63 +348,61 @@ margin-left: 35%;
     });
 
 
-        const items = document.querySelectorAll(".accordion button");
-
-function toggleAccordion() {
-  const itemToggle = this.getAttribute('aria-expanded');
-  
-  for (i = 0; i < items.length; i++) {
-    items[i].setAttribute('aria-expanded', 'false');
-  }
-  
-  if (itemToggle == 'false') {
-    this.setAttribute('aria-expanded', 'true');
-  }
-}
-
-items.forEach(item => item.addEventListener('click', toggleAccordion));
   </script>
   
 
 
 <script>
-    // Fetch data from your MySQL database using PHP
-    <?php
-        // Include your database connection file
-        include 'db_riders.php';
+$(document).ready(function() {
+    function createPieChart(data) {
+        var layout = {
+            title: 'Monthly Motorcycle Accessory Sales by Category'
+        };
 
-        // Query to retrieve sales data
-        $sql = "SELECT `product_name`, `sales_amount` FROM `stock`";
-        $result = mysqli_query($conn, $sql);
+        var labels = data.map(item => item.product_category);
+        var values = data.map(item => item.total_sales);
 
-        // Create arrays to store the data
-        $accessories = [];
-        $sales = [];
+        var trace = {
+            labels: labels,
+            values: values,
+            type: 'pie'
+        };
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $accessories[] = $row["product_name"];
-                $sales[] = $row["sales_amount"];
+        Plotly.newPlot('salesPieChart', [trace], layout);
+    }
+
+    // Function to fetch and update pie chart data based on filter criteria
+    function updatePieChart() {
+        // Get the selected filter criteria
+        var filterCategory = $("#filter-category").val();
+        var filterMonth = $("#filter-month").val();
+        var filterYear = $("#filter-year").val();
+
+        // Make an AJAX request to fetch pie chart data
+        $.ajax({
+            url: "fetchBarChart.php", // Update the URL to the correct PHP file for fetching pie chart data
+            type: "POST",
+            data: {
+                filterCategory: filterCategory,
+                filterMonth: filterMonth,
+                filterYear: filterYear
+            },
+            success: function(data) {
+                createPieChart(JSON.parse(data));
             }
-        }
-    ?>
+        });
+    }
 
-    // Create a pie chart using Plotly with the fetched data
-    var accessories = <?php echo json_encode($accessories); ?>;
-    var sales = <?php echo json_encode($sales); ?>;
+    // Create and display the pie chart when the page loads
+    updatePieChart();
 
-    var data = [{
-        labels: accessories,
-        values: sales,
-        type: 'pie'
-    }];
-
-    var layout = {
-        title: 'Monthly Motorcycle Accessory Sales'
-    };
-
-    Plotly.newPlot('accessoryChart', data, layout);
+    // Attach a change event to the filter form elements
+    $(".filter-form select").change(function() {
+        updatePieChart(); // Update the pie chart when the filters change
+    });
+});
 </script>
+
 
     </body>
     </html>

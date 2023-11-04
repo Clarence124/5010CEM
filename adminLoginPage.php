@@ -1,3 +1,22 @@
+
+<html>
+<head>
+
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Riders Paradise</title>
+    <link rel="stylesheet" href="loginpage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap" rel="stylesheet">
+
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+
+</head>
+
+<style>
+    
 body{
     background: url("bikelogin4.png");
     background-size: cover;
@@ -82,7 +101,7 @@ button[type="submit"] {
 
         }
 
-.register-button {
+.back-button {
            background-color: #a4907c;
     color: #fff;
     border: none;
@@ -94,7 +113,7 @@ button[type="submit"] {
 
         }
 
-        .register-button:hover {
+        .back-button:hover {
     background-color: #61c6d4;
 
     transform: scale(1.05); /* Scale up on hover for a creative effect */
@@ -111,3 +130,32 @@ button[type="submit"] {
                 max-width: 80%;
             }
         }
+
+</style>
+<body>
+    
+    <form action="adminLoginCheck.php" method="POST">
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="uname" id="uname" name="uname" placeholder="Enter your username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="pass" id="pass" name="pass" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" class="login-button" > Login <i class="fa-solid fa-right-to-bracket fa-fade"></i></button>
+        <button class="back-button" type="submit" onclick="window.location.href = 'loginpage.php';"> Back</button>
+
+            </div>
+        </form>
+
+        
+        
+        
+
+
+</body>
+</html>
