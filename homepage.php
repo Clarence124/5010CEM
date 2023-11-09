@@ -242,7 +242,7 @@ margin-left: 35%;
   
 }
 
-#accessoryChart {
+#salesPieChart {
     margin-top: 20px; /* Adjust the margin as needed to position the chart below other content */
     background-color: #fff; /* Set a background color to make the chart stand out */
     padding: 20px; /* Add padding to the chart for spacing */
@@ -283,6 +283,62 @@ margin-left: 35%;
 }
 
 
+/* Style for the filter form */
+.filter-form {
+    background: rgb(225,171,34);
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+   
+}
+
+
+
+.filter-form h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    width: calc(30% - 20px);
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.filter-input:last-child {
+    margin-right: 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #000;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+
     </style>
 
     <body>
@@ -317,9 +373,51 @@ margin-left: 35%;
           </div>
         </div>
 
+        <form id="sales-filter-form" method="post" class="filter-form">
+            <h2>Filter Sales Report</h2>
+            <div class="filter-row">
+                <div class="filter-input">
+                  <label for="filter-category">Product Category:</label>
+                    <select name="filter-category" id="filter-category">
+                      <option value="" selected>All</option>
+                      <option value="Gloves">Gloves</option>
+                      <option value="Helmet">Helmet</option>
+                      <option value="GoPro">GoPro</option>
+                      <option value="Handle Lock">Handle Lock</option>
+                      <option value="Jacket">Jacket</option>
+                  </select>
+                </div>
+            <div class="filter-input">
+                  <label for="filter-month">Month:</label>
+                  <select name="filter-month" id="filter-month">
+                      <option value="">All</option>
+                      <option value="January">January</option>
+                      <option value="February">February</option>
+                      <option value="March">March</option>
+                      <option value="April">April</option>
+                      <option value="May">May</option>
+                      <option value="June">June</option>
+                      <option value="July">July</option>
+                      <option value="August">August</option>
+                      <option value="September">September</option>
+                      <option value="October">October</option>
+                      <option value="November">November</option>
+                      <option value="December">December</option>
+                  </select>
+              </div>
+              <div class="filter-input">
+                  <label for="filter-year">Year:</label>
+                  <select name="filter-year" id="filter-year">
+                      <option value="">All</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                  </select>
+              </div>
+                  
+              </div>
+              </form>
 
-        <div id="accessoryChart"></div></br>
-
+        <div id="salesPieChart"></div></br>
 
         <div class="container">
     <div class="title"><center><h1>Frequently Asked Questions (FAQ)</h1></center></div>
@@ -328,25 +426,33 @@ margin-left: 35%;
              <div class="faq-question" onclick="toggleAnswer('answer1')">
               <div class="question-text">1. What types of motor spare parts do you offer?</div><i class="fas fa-plus"></i></div>
               <div class="faq-answer" id="answer1">We offer a wide range of motor spare parts, including but not limited to engine components, brakes, suspension parts, electrical components, and more. Browse our catalog for a complete list.</div>
-              </div>
+        </div>
 
         <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer2')">2. Are your spare parts compatible with my vehicle?</div>
-            <div class="faq-answer" id="answer2">Our spare parts are compatible with a variety of makes and models. To ensure compatibility, please use our vehicle lookup tool on the product pages or contact our customer support team for assistance.</div>
+             <div class="faq-question" onclick="toggleAnswer('answer2')">
+              <div class="question-text">2. Are your spare parts compatible with my vehicle?</div><i class="fas fa-plus"></i></div>
+              <div class="faq-answer" id="answer2">Our spare parts are compatible with a variety of makes and models. To ensure compatibility, please use our vehicle lookup tool on the product pages or contact our customer support team for assistance.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer3')">3. How can I find the specific part I need?</div>
-            <div class="faq-answer" id="answer3">You can use our search bar to enter keywords, part numbers, or browse through our categories. Additionally, you can filter products by make, model, and year for a more targeted search.</div>
+             <div class="faq-question" onclick="toggleAnswer('answer3')">
+              <div class="question-text">3. How can I find the specific part I need?</div><i class="fas fa-plus"></i></div>
+              <div class="faq-answer" id="answer3">You can use our search bar to enter keywords, part numbers, or browse through our categories. Additionally, you can filter products by make, model, and year for a more targeted search.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer4')">4. How can I contact your customer support team?</div>
-            <div class="faq-answer" id="answer4">You can reach our customer support team by contacting us. We're available via email, phone, and live chat during our business hours.</div>
+             <div class="faq-question" onclick="toggleAnswer('answer4')">
+              <div class="question-text">4. How can I contact your customer support team?</div><i class="fas fa-plus"></i></div>
+              <div class="faq-answer" id="answer4">You can reach our customer support team by contacting us. We're available via email, phone, and live chat during our business hours.</div>
         </div>
+
         <div class="faq-item">
-            <div class="faq-question" onclick="toggleAnswer('answer5')">5. How do I know if a part is in stock?</div>
-            <div class="faq-answer" id="answer5">
-- On each product page, you'll find real-time stock availability information. If a product is out of stock, you can sign up for notifications to be alerted when it becomes available again.</div>
+             <div class="faq-question" onclick="toggleAnswer('answer5')">
+              <div class="question-text">5. How do I know if a part is in stock?</div><i class="fas fa-plus"></i></div>
+              <div class="faq-answer" id="answer5">On each product page, you'll find real-time stock availability information. If a product is out of stock, you can sign up for notifications to be alerted when it becomes available again.</div>
         </div>
+        
+        
     </div>
 
     <script>
@@ -431,42 +537,54 @@ items.forEach(item => item.addEventListener('click', toggleAccordion));
 
 
 <script>
-    // Fetch data from your MySQL database using PHP
-    <?php
-        // Include your database connection file
-        include 'db_riders.php';
+  $(document).ready(function() {
+    function createPieChart(data) {
+        var layout = {
+            title: 'Overall Motorcycle Accessory Sales'
+        };
 
-        // Query to retrieve sales data
-        $sql = "SELECT `product_name`, `sales_amount` FROM `stock`";
-        $result = mysqli_query($conn, $sql);
+        var labels = data.map(item => item.product_category);
+        var values = data.map(item => item.total_sales);
 
-        // Create arrays to store the data
-        $accessories = [];
-        $sales = [];
+        var trace = {
+            labels: labels,
+            values: values,
+            type: 'pie'
+        };
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $accessories[] = $row["product_name"];
-                $sales[] = $row["sales_amount"];
+        Plotly.newPlot('salesPieChart', [trace], layout);
+    }
+
+    // Function to fetch and update pie chart data based on filter criteria
+    function updatePieChart() {
+        // Get the selected filter criteria
+        var filterCategory = $("#filter-category").val();
+        var filterMonth = $("#filter-month").val();
+        var filterYear = $("#filter-year").val();
+
+        // Make an AJAX request to fetch pie chart data
+        $.ajax({
+            url: "fetchBarChart.php", // Update the URL to the correct PHP file for fetching pie chart data
+            type: "POST",
+            data: {
+                filterCategory: filterCategory,
+                filterMonth: filterMonth,
+                filterYear: filterYear
+            },
+            success: function(data) {
+                createPieChart(JSON.parse(data));
             }
-        }
-    ?>
+        });
+    }
 
-    // Create a pie chart using Plotly with the fetched data
-    var accessories = <?php echo json_encode($accessories); ?>;
-    var sales = <?php echo json_encode($sales); ?>;
+    // Create and display the pie chart when the page loads
+    updatePieChart();
 
-    var data = [{
-        labels: accessories,
-        values: sales,
-        type: 'pie'
-    }];
-
-    var layout = {
-        title: 'Monthly Motorcycle Accessory Sales'
-    };
-
-    Plotly.newPlot('accessoryChart', data, layout);
+    // Attach a change event to the filter form elements
+    $(".filter-form select").change(function() {
+        updatePieChart(); // Update the pie chart when the filters change
+    });
+});
 </script>
 
     </body>
