@@ -517,7 +517,7 @@ button:hover {
             <div class="form-group">
               <label for="expiration">Expiration Date (MM/YY):</label>
               <select id="expmonth" class="expmonth" name="expmonth">
-                <option value="<?php echo $paymentRow['expmonth']; ?>" disabled selected><?php echo $paymentRow['expmonth']; ?></option>
+                <option value="<?php echo $paymentRow['expmonth']; ?>" selected><?php echo $paymentRow['expmonth']; ?></option>
                 <!-- Other options here -->
                   <option value="01">01</option>
                   <option value="02">02</option>
@@ -533,7 +533,7 @@ button:hover {
                   <option value="12">12</option>
               </select>
               <select id="expyear" class="expyear" name="expyear">
-                <option value="<?php echo $paymentRow['expyear']; ?>" disabled selected><?php echo $paymentRow['expyear']; ?></option>
+                <option value="<?php echo $paymentRow['expyear']; ?>" selected><?php echo $paymentRow['expyear']; ?></option>
                 <!-- Other options here -->
                   <option value="23">23</option>
                   <option value="24">24</option>
