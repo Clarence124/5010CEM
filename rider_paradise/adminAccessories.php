@@ -55,13 +55,13 @@
     }
 
     .sidebar.closed {
-      width: 120px;
+      width: 100px;
       /* Adjust the width as needed */
     }
 
     .sidebar ul {
       list-style-type: none;
-      margin: 1;
+      margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -69,7 +69,7 @@
 
     .sidebar li {
       margin-bottom: 10px;
-      width: 80%;
+      width: 100%;
     }
 
     .sidebar a {
@@ -82,7 +82,6 @@
       width: 100%;
       padding: 10px;
       position: relative;
-      margin-right: 10px;
     }
 
     .sidebar a i {
@@ -111,6 +110,7 @@
 
     .sidebar.closed a .item {
       justify-content: center;
+      display: none;
       text-indent: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -118,6 +118,7 @@
 
     .sidebar.closed a i {
       margin-right: 0;
+
     }
 
     .sidebar.closed a span.tooltip {
@@ -125,18 +126,7 @@
       pointer-events: auto;
     }
 
-    .sidebar.closed h3 {
-      justify-content: center;
 
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    .sidebar.closed h3 i {
-      margin-right: 10px;
-      display: flex;
-    }
 
     .sidebar.closed a span.tooltip {
       opacity: 0;
@@ -153,11 +143,17 @@
       font-size: 24px;
     }
 
-    .sidebar .menu-icon {
-      font-size: 20px;
-      margin-right: 10px;
+    .sidebar.closed h3 {
+      overflow: hidden;
+      text-align: center;
     }
 
+
+
+    .sidebar .menu-icon {
+
+      font-size: 20px;
+    }
 
     .content {
       margin-left: 200px;
@@ -397,30 +393,27 @@
 
 
   <div class="sidebar open">
-
     <ul>
-      <h3>
-        Menu
-        <i class='bx bx-menu menu-icon' id="btn"></i>
-      </h3>
-      <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-          <div class="item">Homepage</div>
-        </a></li>
-      <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-          <div class="item">Profile</div>
-        </a></li>
-      <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-          <div class="item">Spare parts</div>
-        </a></li>
-      <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-          <div class="item"> Accessories</div>
-        </a></li>
-      <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-          <div class="item"> Payment</div>
-        </a></li>
-      <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-          <div class="item">Logout</div>
-        </a></li>
+      <center>
+        <li>
+          <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+        </li>
+        <li><a href="adminHomepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+            <div class="item">Homepage</div>
+          </a></li>
+        <li><a href="adminSalesPage.php"><i class="bx bx-cog"></i><span class="tooltip">Sales of the Stocks</span>
+            <div class="item">Sales</div>
+          </a></li>
+        <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+            <div class="item">Spare Parts</div>
+          </a></li>
+        <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+            <div class="item">Accessories</div>
+          </a></li>
+        <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+            <div class="item">Logout</div>
+          </a></li>
+      </center>
     </ul>
   </div>
 
@@ -431,10 +424,6 @@
         <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
       </div>
       <h2>Accessories</h2>
-      <form action="/action_page.php">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i class="bx bx-search"></i></button>
-      </form>
     </div>
     <p>Welcome to Rider Paradise's Accessories Page! You can view the list of motor accessories below.</p>
 

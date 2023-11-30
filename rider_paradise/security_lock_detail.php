@@ -9,8 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $productPrice = $_POST["price"];
     $productRating = $_POST["rating"];
 
-    // Perform any validation and processing needed
-    // For example, you can move the uploaded image to a specific folder
     $uploadDirectory = "pictures/"; // Change this to your desired directory
     $targetFilePath = $uploadDirectory . $imageName;
 
@@ -22,9 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Bind the parameters
         $stmt->bind_param("ssdi", $targetFilePath, $productName, $productPrice, $productRating);
 
-        // Execute the SQL statement
+
         if ($stmt->execute()) {
-            // Redirect back to the accessories page or any other desired page
+
             header("Location: adminAccessories.php");
             exit();
         } else {
@@ -93,13 +91,13 @@ $result = $conn->query($sql);
         }
 
         .sidebar.closed {
-            width: 120px;
+            width: 100px;
             /* Adjust the width as needed */
         }
 
         .sidebar ul {
             list-style-type: none;
-            margin: 1;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -107,7 +105,7 @@ $result = $conn->query($sql);
 
         .sidebar li {
             margin-bottom: 10px;
-            width: 80%;
+            width: 100%;
         }
 
         .sidebar a {
@@ -120,7 +118,6 @@ $result = $conn->query($sql);
             width: 100%;
             padding: 10px;
             position: relative;
-            margin-right: 10px;
         }
 
         .sidebar a i {
@@ -149,6 +146,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a .item {
             justify-content: center;
+            display: none;
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -156,6 +154,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a i {
             margin-right: 0;
+
         }
 
         .sidebar.closed a span.tooltip {
@@ -163,18 +162,7 @@ $result = $conn->query($sql);
             pointer-events: auto;
         }
 
-        .sidebar.closed h3 {
-            justify-content: center;
 
-            text-indent: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .sidebar.closed h3 i {
-            margin-right: 10px;
-            display: flex;
-        }
 
         .sidebar.closed a span.tooltip {
             opacity: 0;
@@ -191,11 +179,15 @@ $result = $conn->query($sql);
             font-size: 24px;
         }
 
-        .sidebar .menu-icon {
-            font-size: 20px;
-            margin-right: 10px;
+        .sidebar.closed h3 {
+            overflow: hidden;
+            text-align: center;
         }
 
+        .sidebar .menu-icon {
+
+            font-size: 20px;
+        }
 
         .content {
             margin-left: 200px;
@@ -254,15 +246,15 @@ $result = $conn->query($sql);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width:1070px;
+            width: 1070px;
         }
 
         .topnav h2 {
             margin: 0;
             font-size: 20px;
-            text-align:center;
-            line-height:40px;
-            height:40px;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
         }
 
         .accessories-image img {
@@ -485,7 +477,7 @@ $result = $conn->query($sql);
             display: flex;
             align-items: center;
             color: #f57224;
-            
+
         }
 
         .product-rating i.bx {
@@ -508,9 +500,9 @@ $result = $conn->query($sql);
             margin-top: 20px;
             flex: 1;
             width: 200px;
-            height: 490px;
-            position:absolute;
-            top:90px;
+            height: 600px;
+            position: absolute;
+            top: 90px;
             right: -70px;
             left: 1050px;
             bottom: 500px;
@@ -633,30 +625,31 @@ $result = $conn->query($sql);
 
 
     <div class="sidebar open">
-
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-                    <div class="item"> Payment</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 
@@ -689,13 +682,13 @@ $result = $conn->query($sql);
                         }
                         ?>
                         <div class="product">
-                            <a href="Solex_disk_lock_detail.php?id=1">
+                            <a href="Solex_disk_lock_detail.php?id=SL001">
                                 <div class="product-image">
                                     <img src="pictures/Solex Disk lock.jpeg" alt="Solex Disk lock">
                                 </div>
                                 <div class="product-details">
                                     <h3 class="product-title">Solex 9030 Premium Motorcycle Disk Lock Heavy Duty</h3>
-                                    <p class="product-price">Price: RM70</p>
+                                    <p class="product-price">Price: RM70.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
                                         <i class="bx bx-star"></i>
@@ -736,7 +729,8 @@ $result = $conn->query($sql);
                                     <img src="pictures/Tonyun fork lock.jpeg" alt="Tonyun fork lock">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">TONYON Fork Lock Heavy Duty Security Chain Lock Motorcycle</h3>
+                                    <h3 class="product-title">TONYON Fork Lock Heavy Duty Security Chain Lock Motorcycle
+                                    </h3>
                                     <p class="product-price">Price: RM30.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
@@ -756,7 +750,8 @@ $result = $conn->query($sql);
                                     <img src="pictures/Sunso chain lock.jpeg" alt="Sunso security chain">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">SUNSO 8MM THICKNESS HEAVY DUTY SECURITY STEEL CHAIN LOCK</h3>
+                                    <h3 class="product-title">SUNSO 8MM THICKNESS HEAVY DUTY SECURITY STEEL CHAIN LOCK
+                                    </h3>
                                     <p class="product-price">Price: RM40.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
@@ -768,265 +763,276 @@ $result = $conn->query($sql);
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                </div>
-
-
-                <div class="container-box">
-                    <div class="products-container1">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $productId = $row['id'];
-                            $productImage = $row['filepath'];
-                            $productName = $row['title'];
-                            $productPrice = $row['price'];
-                            $productRating = $row['rating'];
-                        }
-                        ?>
-                        <div class="product1">
-                            <a href="air_jordan_jacket.php?id=5">
-                                <div class="product-image">
-                                    <img src="pictures/Kovix alarm lock.jpeg" alt="Air jordan jacket">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">KOVIX Motorcycle Alarm Disc Lock KD6 Anti Theft Motorsikal</h3>
-                                    <p class="product-price">Price: RM80.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="PU_leather_jacket_detail.php?id=6">
-                                <div class="product-image">
-                                    <img src="pictures/Kovix chain lock.jpeg" alt="Leather jacket">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">KOVIX Alarm Chain Lock 120cm Cable Motorcycle Heavy Duty</h3>
-                                    <p class="product-price">Price: RM100.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="Honda_jacket_detail.php?id=7">
-                                <div class="product-image">
-                                    <img src="pictures/Alarm lock.jpeg" alt="GTmotor Helmet">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">HMotorcycle Alarm Motorbike 12V Anti-theft Security System Start Alarms</h3>
-                                    <p class="product-price">Price: RM90.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="North_face_jacket_detail.php?id=8">
-                                <div class="product-image">
-                                    <img src="pictures/Alarm disk lock.jpeg" alt="North face jacket">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Motorcycle Alarm Disc Lock siren 110dB Sound Aluminum Alloy Brake</h3>
-                                    <p class="product-price">Price: RM40.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="filter-container">
-                            <div class="filter-item">
-                                <h3>Search Filter</h3>
-                                <div class="input-group">
-                                    <input type="text" id="searchFilter" placeholder="Search...">
-                                    <button id="applySearchFilter"><i class="bx bx-search"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Brand filter -->
-                            <div class="filter-item">
-                                <h3>Brand</h3>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="NIKE"> NIKE
-                                </label>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="Others"> Others
-                                </label>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="Air jordan"> Air jordan
-                                </label>
-                            </div>
-
-                            <!-- Price range filter -->
-                            <div class="filter-item">
-                                <h3>Price Range</h3>
-                                <div class="price-filter-container">
-                                    <div class="input-group">
-                                        <div class="price-input">
-                                            RM <input type="number" id="minPrice" placeholder="Min">
-                                        </div>-
-                                        <div class="price-input">
-                                            RM <input type="number" id="maxPrice" placeholder="Max">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <button id="applyPriceFilter">Apply</button>
-                            </div>
-
-                            <!-- Rating filter -->
-                            <div class="filter-item">
-                                <h3>Rating</h3>
-                                <div class="rating-filter">
-                                    <!-- Add rating star icons here -->
-                                    <label>
-                                        <input type="checkbox" class="ratingFilter" value="5"> 5 Stars
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" class="ratingFilter" value="4"> 4 Stars
-                                    </label>
-                                    <!-- Add more rating options as needed -->
-                                </div>
-                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="image-popup"></div>
 
 
-                </section>
-
-
-
-                <script>
-                    // Hide the image popup container, but only if the user clicks outside the image
-                    image_popup.onclick = e => {
-                        if (e.target.className == 'image-popup') {
-                            image_popup.style.display = "none";
-                        }
-                    };
-
-
-                </script>
-
-                <script>
-                    $(document).ready(function () {
-                        // Toggle sidebar open and closed
-                        $('#btn').click(function () {
-                            $('.sidebar').toggleClass('open closed');
-                        });
-                    });
-                </script>
-
-                <script>
-                    // Filter products based on search text
-                    $("#applySearchFilter").click(function () {
-                        var searchText = $("#searchFilter").val().toLowerCase();
-                        $(".product").each(function () {
-                            var productName = $(this).find(".product-title").text().toLowerCase();
-                            if (productName.includes(searchText)) {
-                                $(this).show();
-                            } else {
-                                $(this).hide();
+                    <div class="container-box">
+                        <div class="products-container1">
+                            <?php
+                            while ($row = $result->fetch_assoc()) {
+                                $productId = $row['id'];
+                                $productImage = $row['filepath'];
+                                $productName = $row['title'];
+                                $productPrice = $row['price'];
+                                $productRating = $row['rating'];
                             }
-                        });
-                    });
+                            ?>
+                            <div class="product1">
+                                <a href="Kovix_lock_detail.php?id=5">
+                                    <div class="product-image">
+                                        <img src="pictures/Kovix alarm lock.jpeg" alt="Kovix alarm lock">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">KOVIX Motorcycle Alarm Disc Lock KD6 Anti Theft
+                                            Motorsikal</h3>
+                                        <p class="product-price">Price: RM80.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
 
-                    // Filter products based on brand
-                    $(".brandFilter").click(function () {
-                        var selectedBrands = [];
-                        $(".brandFilter:checked").each(function () {
-                            selectedBrands.push($(this).val());
-                        });
-                        if (selectedBrands.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
-                                var productBrand = $(this).find(".brand").text().toLowerCase();
-                                if (selectedBrands.includes(productBrand)) {
-                                    $(this).show();
-                                } else {
-                                    $(this).hide();
+                            <div class="product1">
+                                <a href="PU_leather_jacket_detail.php?id=6">
+                                    <div class="product-image">
+                                        <img src="pictures/Kovix chain lock.jpeg" alt="Leather jacket">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">KOVIX Alarm Chain Lock 120cm Cable Motorcycle Heavy
+                                            Duty</h3>
+                                        <p class="product-price">Price: RM100.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="product1">
+                                <a href="Honda_jacket_detail.php?id=7">
+                                    <div class="product-image">
+                                        <img src="pictures/Alarm lock.jpeg" alt="GTmotor Helmet">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">HMotorcycle Alarm Motorbike 12V Anti-theft Security
+                                            System Start Alarms</h3>
+                                        <p class="product-price">Price: RM90.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="product1">
+                                <a href="North_face_jacket_detail.php?id=8">
+                                    <div class="product-image">
+                                        <img src="pictures/Alarm disk lock.jpeg" alt="North face jacket">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">Motorcycle Alarm Disc Lock siren 110dB Sound Aluminum
+                                            Alloy Brake</h3>
+                                        <p class="product-price">Price: RM40.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="filter-container">
+                                <!-- Search filter -->
+                                <div class="filter-item">
+                                    <h3>Search Filter</h3>
+                                    <div class="input-group">
+                                        <input type="text" id="searchFilter" placeholder="Search...">
+                                        <button id="applySearchFilter"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Brand filter -->
+                                <div class="filter-item">
+                                    <h3>Brand</h3>
+                                    <label>
+                                        <input type="checkbox" class="brandFilter" value="Solex"> Solex
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="brandFilter" value="Tonyon"> Tonyon
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" class="brandFilter" value="Sunyo"> Sunyo
+                                    </label>
+                                </div>
+
+                                <!-- Price range filter -->
+                                <div class="filter-item">
+                                    <h3>Price Range</h3>
+                                    <div class="price-filter-container">
+                                        <div class="input-group">
+                                            <div class="price-input">
+                                                RM <input type="number" id="minPrice" placeholder="Min">
+                                            </div>
+                                            <div class="price-input">
+                                                RM <input type="number" id="maxPrice" placeholder="Max">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button id="applyPriceFilter">Apply</button>
+                                </div>
+
+                                <!-- Rating filter -->
+                                <div class="filter-item">
+                                    <h3>Rating</h3>
+                                    <div class="rating-filter">
+                                        <!-- Add rating star icons here -->
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="5"> 5 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="4"> 4 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="3"> 3 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="2"> 2 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="1"> 1 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="0"> 0 Stars
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="filter-item">
+                                    <button id="clearAllFilters">Clear All</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="image-popup"></div>
+
+
+                        </section>
+
+
+
+                        <script>
+                            // Hide the image popup container, but only if the user clicks outside the image
+                            image_popup.onclick = e => {
+                                if (e.target.className == 'image-popup') {
+                                    image_popup.style.display = "none";
                                 }
-                            });
-                        }
-                    });
+                            };
 
-                    // Filter products based on price range
-                    $("#applyPriceFilter").click(function () {
-                        var minPrice = parseFloat($("#minPrice").val());
-                        var maxPrice = parseFloat($("#maxPrice").val());
-                        $(".product").each(function () {
-                            var productPrice = parseFloat(
-                                $(this)
-                                    .find(".product-price")
-                                    .text()
-                                    .replace(/[^0-9.]/g, "")
-                            );
-                            if (!isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice) {
-                                $(this).show();
-                            } else {
-                                $(this).hide();
+
+                        </script>
+
+                        <script>
+                            $(document).ready(function () {
+                                // Toggle sidebar open and closed
+                                $('#btn').click(function () {
+                                    $('.sidebar').toggleClass('open closed');
+                                });
+                            });
+                        </script>
+
+                        <script>
+                            $("#applySearchFilter").click(function () {
+                                var searchText = $("#searchFilter").val().toLowerCase();
+                                $(".product, .product1").each(function () {
+                                    var productName = $(this).find(".product-title").text().toLowerCase();
+                                    if (productName.includes(searchText)) {
+                                        $(this).show();
+                                    } else {
+                                        $(this).hide();
+                                    }
+                                });
+                            });
+
+                            $(".brandFilter").click(function () {
+                                applyFilters();
+                            });
+
+                            $("#applyPriceFilter").click(function () {
+                                applyFilters();
+                            });
+
+                            $(".ratingFilter").click(function () {
+                                applyFilters();
+                            });
+
+                            function applyFilters() {
+                                var selectedBrands = $(".brandFilter:checked").map(function () {
+                                    return $(this).val();
+                                }).get();
+
+                                var minPrice = parseFloat($("#minPrice").val()) || 0;
+                                var maxPrice = parseFloat($("#maxPrice").val()) || Infinity;
+
+                                var selectedRatings = $(".ratingFilter:checked").map(function () {
+                                    return parseInt($(this).val());
+                                }).get();
+
+                                $(".product, .product1").each(function () {
+                                    var productBrand = $(this).find(".brand").text().toLowerCase();
+                                    var productPrice = parseFloat($(this).find(".product-price").text().replace(/[^0-9.]/g, ""));
+                                    var productRating = parseInt($(this).find(".product-rating").text().replace(/[^0-9]/g, ""));
+
+                                    var brandFilter = selectedBrands.length === 0 || selectedBrands.includes(productBrand);
+                                    var priceFilter = !isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice;
+                                    var ratingFilter = selectedRatings.length === 0 || selectedRatings.includes(productRating);
+
+                                    if (brandFilter && priceFilter && ratingFilter) {
+                                        $(this).show();
+                                    } else {
+                                        $(this).hide();
+                                    }
+                                });
                             }
-                        });
-                    });
+                        </script>
 
-                    // Filter products based on rating
-                    $(".ratingFilter").click(function () {
-                        var selectedRatings = [];
-                        $(".ratingFilter:checked").each(function () {
-                            selectedRatings.push(parseInt($(this).val()));
-                        });
-                        if (selectedRatings.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
-                                var productRating = parseInt(
-                                    $(this)
-                                        .find(".product-rating")
-                                        .text()
-                                        .replace(/[^0-9]/g, "")
-                                );
-                                if (selectedRatings.includes(productRating)) {
-                                    $(this).show();
-                                } else {
-                                    $(this).hide();
-                                }
+                        <script>
+                            $("#clearAllFilters").click(function () {
+                                $("#searchFilter").val('');
+                                $(".brandFilter").prop('checked', false);
+
+                                $("#minPrice").val('');
+                                $("#maxPrice").val('');
+
+
+                                $(".ratingFilter").prop('checked', false);
+
+
+                                applyFilters();
                             });
-                        }
-                    });
-
-                </script>
+                        </script>
 
 
 

@@ -880,6 +880,32 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
             max-width: 100%;
             overflow-x: auto;
         }
+
+        /* Add this CSS to control the image size */
+        .product-image-container {
+            max-width: 100px;
+            /* Adjust the width as needed */
+            max-height: 100px;
+            /* Adjust the height as needed */
+            overflow: hidden;
+            /* Ensure the image doesn't overflow its container */
+        }
+
+        .product-image-container img {
+            width: 100%;
+            /* Make the image fill its container */
+            height: 100px;
+        }
+
+        .remove-button {
+            background-color: #ff0000;
+            ;
+            color: #ffffff;
+            ;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -887,30 +913,31 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
 
 
     <div class="sidebar open">
-
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="checkout_page.php"><i class="bx bx-gift"></i><span class="tooltip">Checkout</span>
-                    <div class="item"> Checkout</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 
@@ -942,7 +969,10 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
                     <tbody class="cart-items">
                         <?php foreach ($shoppingCart as $itemIndex => $item): ?>
                             <tr>
-                                <td><img src="<?= $item['productImage']; ?>" alt="Product Image"></td>
+                                <td>
+                                    <img src="<?= $item['productImage']; ?>" alt="Product Image" width="100" height="100">
+                                </td>
+
                                 <td>
                                     <?= $item['productName']; ?>
                                 </td>
@@ -977,8 +1007,9 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
 
 
                 <div class="btn-purchase" style="margin-top: 10%;">
-                    <button type="button" class="btn btn-dark btn-purchase "><i class="fa-solid fa-cart-shopping "
-                            style="margin-right: 6%;"></i>Checkout</button>
+                    <button type="button" class="btn btn-dark btn-purchase" id="checkoutButton">
+                        <i class="fa-solid fa-cart-shopping" style="margin-right: 6%;"></i>Checkout
+                    </button>
                 </div>
 
             </section>
@@ -1077,12 +1108,7 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
             const clearAllButton = document.getElementById('clear-all-button');
             const cartTable = document.querySelector('.cart-items');
 
-            const params = new URLSearchParams(window.location.search);
-            const productDetails = getNewProductDetails(params); // Implement this function to extract new product details
-
-            if (productDetails) {
-                addToCart(productDetails);
-            }
+            loadCartFromLocalStorage();
 
             clearAllButton.addEventListener('click', function () {
                 console.log('Clear All button clicked');
@@ -1093,32 +1119,39 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
 
             // Function to clear the shopping cart
             function clearShoppingCart() {
-                shoppingCart = []; // Clear the underlying shoppingCart data
-                localStorage.removeItem('shoppingCart'); // Also clear data from local storage
+                shoppingCart = [];
+                localStorage.removeItem('shoppingCart');
                 updateTotalPrice();
             }
 
+            function loadCartFromLocalStorage() {
+                const savedCart = localStorage.getItem('shoppingCart');
+                if (savedCart) {
+                    shoppingCart = JSON.parse(savedCart);
+                }
+                updateCartDisplay();
+            }
 
             function addToCart(productDetails) {
                 // Check if the product already exists in the cart
                 const existingItem = shoppingCart.find(item =>
-                    item.productImage === product.productImage &&
-                    item.color === product.color &&
-                    item.size === product.size
+                    item.product_id === productDetails.product_id &&
+                    item.color === productDetails.color &&
+                    item.size === productDetails.size
                 );
 
                 if (existingItem) {
-                    existingItem.quantity += product.quantity;
+                    existingItem.quantity += productDetails.quantity;
                 } else {
-                    shoppingCart.push(product);
+                    shoppingCart.push(productDetails);
                 }
 
                 // Update the local storage
                 localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+                updateCartDisplay();
             }
-        });
 
-        function updateCartDisplay() {
+            function updateCartDisplay() {
                 const cartTable = document.querySelector('.cart-items');
                 cartTable.innerHTML = '';
 
@@ -1126,14 +1159,14 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
                     const row = cartTable.insertRow();
                     const imageCell = row.insertCell(0);
                     const nameCell = row.insertCell(1);
-                    const discountCell = row.insertCell(2);
+                    const priceCell = row.insertCell(2);
                     const colorCell = row.insertCell(3);
                     const sizeCell = row.insertCell(4);
                     const quantityCell = row.insertCell(5);
 
                     imageCell.innerHTML = `<img src="${item.productImage}" alt="${item.productName}">`;
                     nameCell.textContent = item.productName;
-                    discountCell.textContent = item.price;
+                    priceCell.textContent = `RM ${item.price.toFixed(2)}`;
                     colorCell.textContent = item.color;
                     sizeCell.textContent = item.size;
                     quantityCell.textContent = item.quantity;
@@ -1148,8 +1181,12 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
                     return total + item.quantity * item.price;
                 }, 0);
                 totalPriceElement.textContent = `RM ${totalCartValue.toFixed(2)}`;
-
             }
+
+        });
+
+
+
 
 
     </script>
@@ -1231,6 +1268,12 @@ $shoppingCart = isset($_SESSION['shoppingCart']) ? $_SESSION['shoppingCart'] : [
 
         // Call the function to load cart items when the page loads
         loadCartItems();
+    </script>
+
+    <script>
+        document.getElementById('checkoutButton').addEventListener('click', function () {
+            window.location.href = 'checkout_page.php';
+        });
     </script>
 
 </html>

@@ -11,9 +11,6 @@ if ($result === false) {
     die("Error: " . $conn->error);
 }
 
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = []; // Initialize an empty cart
-}
 
 ?>
 
@@ -70,13 +67,13 @@ if (!isset($_SESSION['cart'])) {
         }
 
         .sidebar.closed {
-            width: 120px;
+            width: 100px;
             /* Adjust the width as needed */
         }
 
         .sidebar ul {
             list-style-type: none;
-            margin: 1;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -84,7 +81,7 @@ if (!isset($_SESSION['cart'])) {
 
         .sidebar li {
             margin-bottom: 10px;
-            width: 80%;
+            width: 100%;
         }
 
         .sidebar a {
@@ -97,7 +94,6 @@ if (!isset($_SESSION['cart'])) {
             width: 100%;
             padding: 10px;
             position: relative;
-            margin-right: 10px;
         }
 
         .sidebar a i {
@@ -126,6 +122,7 @@ if (!isset($_SESSION['cart'])) {
 
         .sidebar.closed a .item {
             justify-content: center;
+            display: none;
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -133,6 +130,7 @@ if (!isset($_SESSION['cart'])) {
 
         .sidebar.closed a i {
             margin-right: 0;
+
         }
 
         .sidebar.closed a span.tooltip {
@@ -140,18 +138,7 @@ if (!isset($_SESSION['cart'])) {
             pointer-events: auto;
         }
 
-        .sidebar.closed h3 {
-            justify-content: center;
 
-            text-indent: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .sidebar.closed h3 i {
-            margin-right: 10px;
-            display: flex;
-        }
 
         .sidebar.closed a span.tooltip {
             opacity: 0;
@@ -168,11 +155,15 @@ if (!isset($_SESSION['cart'])) {
             font-size: 24px;
         }
 
-        .sidebar .menu-icon {
-            font-size: 20px;
-            margin-right: 10px;
+        .sidebar.closed h3 {
+            overflow: hidden;
+            text-align: center;
         }
 
+        .sidebar .menu-icon {
+
+            font-size: 20px;
+        }
 
         .content {
             margin-left: 200px;
@@ -709,30 +700,31 @@ if (!isset($_SESSION['cart'])) {
 
 
     <div class="sidebar open">
-
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-                    <div class="item"> Payment</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 
@@ -743,8 +735,8 @@ if (!isset($_SESSION['cart'])) {
                 <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
             </div>
             <h2>Accessories</h2>
-            <div class="shopping">
-                <img src="pictures/shopping.svg">
+            <div class="shopping" id="shoppingCart">
+                <img src="pictures/shopping.svg" alt="Shopping Cart">
                 <span class="quantity">0</span>
             </div>
         </div>
@@ -763,7 +755,6 @@ if (!isset($_SESSION['cart'])) {
                 $productColorOptions = explode(', ', $row["product_color"]);
 
                 ?>
-                <!-- Display the product information -->
                 <div class="product-container">
                     <div class="product-image">
                         <img id="mainImage" src="pictures/AD Helmet.jpeg" alt="AD Helmet">
@@ -784,8 +775,6 @@ if (!isset($_SESSION['cart'])) {
 
 
                     <div class="product-details">
-                        <button class="edit-button">Edit</button>
-
                         <h1 class="product-title">
                             <?= $productName ?>
                         </h1>
@@ -824,8 +813,10 @@ if (!isset($_SESSION['cart'])) {
                         </select>
 
                         <div class="button-container">
-                            <button type="button" class="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
-                            <button type="button" class="buy-now-button">Buy now</button>
+                            <button type="button" class="add-to-cart-button" onclick="addToCart()">Add
+                                to
+                                Cart</button>
+                            <button type="button" class="buy-now-button" onclick="redirectToCheckout()">Buy now</button>
                         </div>
 
                         <h2>Description</h2>
@@ -848,31 +839,13 @@ if (!isset($_SESSION['cart'])) {
                     </div>
 
 
-                    <form class=" edit-form" style="display: none;">
-                        <input type="text" name="newProductName" value="<?= $productName ?>">
-                        <input type="text" name="newProductPrice" value="<?= $productPrice ?>">
-                        <input type="text" name="newProductDescription" value="<?= $productDescription ?>">
 
-                        <button type="button" class="save-button">Save</button>
-
-                    </form>
                 </div>
 
                 <?php
             }
             ?>
         </div>
-
-        <div class="card">
-            <h1>Add to Cart</h1>
-            <ul class="listCard">
-            </ul>
-            <div class="checkOut">
-                <div class="total">0</div>
-                <div class="closeShopping">Close</div>
-            </div>
-        </div>
-
 
         <center>
 
@@ -1147,10 +1120,15 @@ if (!isset($_SESSION['cart'])) {
             // Get the price adjustments from the priceMap
             const priceAdjustments = priceMap[selectedColor][selectedSize];
 
+            const discountedPrice = priceAdjustments.discounted;
+
             // Display the updated prices
             originalPriceDisplay.textContent = 'RM ' + priceAdjustments.original.toFixed(2);
             discountPriceDisplay.textContent = 'RM ' + priceAdjustments.discounted.toFixed(2);
+
+            return discountedPrice;
         }
+
 
 
 
@@ -1186,111 +1164,73 @@ if (!isset($_SESSION['cart'])) {
     </script>
 
     <script>
-        let openShopping = document.querySelector('.shopping');
-        let closeShopping = document.querySelector('.closeShopping');
-        let list = document.querySelector('.list');
-        let listCard = document.querySelector('.listCard');
-        let body = document.querySelector('body');
-        let total = document.querySelector('.total');
-        let quantity = document.querySelector('.quantity');
-
-        openShopping.addEventListener('click', () => {
-            body.classList.add('active');
-        })
-        closeShopping.addEventListener('click', () => {
-            body.classList.remove('active');
-        })
-
-        let products = [
-            {
-                id: 'H001',
-                name: 'PRODUCT NAME 1',
-                image: 'pictures/AD helmet.jpeg',
-                price: '95.00'
-            },
-
-        ];
-        let listCards = [];
+        let shoppingCart = '';
 
         function addToCart() {
-            // Get selected product details from the page
-            const mainImage = document.getElementById('mainImage').src;
-            const productName = document.querySelector('.product-title').textContent;
-            const discountPrice = parseFloat(document.getElementById('discountPrice').textContent);
-            const quantity = parseInt(document.querySelector('.quantity-input').value);
-            const color = document.getElementById('colorSelector').value;
-            const size = document.getElementById('sizeSelector').value;
+            // Define your product details
+            const productId = 'H001';
+            const productImage = "pictures/AD_helmet.jpeg";
+            const productName = 'AD Uncovered Helmet Motorcycle Helmet Light Four Seasons';
 
-            if (isNaN(discountPrice)) {
-                // Handle cases where discountPrice is not a valid number, e.g., "RM85.00"
-                const priceParts = discountPrice.split('RM');
-                if (priceParts.length === 2) {
-                    discountPrice = parseFloat(priceParts[1]);
-                } else {
-                    // Handle other cases here as needed
-                }
-            }
+            const colorSelect = document.getElementById('colorSelector');
+            const sizeSelect = document.getElementById('sizeSelector');
 
-            // Create a new item for the cart
-            const newItem = {
-                image: mainImage,
-                name: productName,
-                price: discountPrice,
-                quantity: quantity,
+            const color = colorSelect.value;
+            const size = sizeSelect.value;
+
+            const price = calculatePrice(color, size);
+
+            const data = {
+                product_id: productId,
+                productImage: productImage,
+                productName: productName,
+                price: price,
                 color: color,
                 size: size,
+                quantity: 1,
             };
 
-            // Add the item to the cart
-            listCards.push(newItem);
+            fetch('insert_into_cart.php', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                        shoppingCart.push(data);
+                        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 
-            // Refresh the cart display
-            reloadCard();
+                        console.log('Product added to the cart successfully.');
+                    } else {
+                        console.error('Error adding the product to the cart.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+
         }
 
-        // Define the "reloadCard" function to display cart contents and total
-        function reloadCard() {
-            listCard.innerHTML = '';
-            let totalPrice = 0;
-            let totalQuantity = 0;
+        function calculatePrice(color, size) {
+            const priceMatrix = {
+                'Black': {
+                    'S': 80.00,
+                    'M': 90.00,
+                    'L': 100.00,
+                },
+                'Red': {
+                    'S': 85.00,
+                    'M': 95.00,
+                    'L': 105.00,
+                },
+            };
 
-            listCards.forEach((item, index) => {
-                if (item) {
-                    const itemTotal = item.price * item.quantity;
-
-                    let newDiv = document.createElement('li');
-                    newDiv.innerHTML = `
-                <div><img src="${item.image}" /></div>
-                <div>${item.name}</div>
-                <div>RM ${item.price.toLocaleString()}</div>
-                <div class="quantity-actions">
-                    <button onclick="changeQuantity(${index}, ${item.quantity - 1})">-</button>
-                    <div class="count">${item.quantity}</div>
-                    <button onclick="changeQuantity(${index}, ${item.quantity + 1})">+</button>
-                </div>
-            `;
-                    listCard.appendChild(newDiv);
-                    totalPrice += itemTotal;
-                    totalQuantity += item.quantity;
-                }
-            });
-
-
-            // Update the total and quantity display
-            total.innerText = 'Total: RM ' + totalPrice.toFixed(2);
-            quantity.innerText = totalQuantity;
-        }
-
-        function changeQuantity(key, quantity) {
-            if (quantity == 0) {
-                delete listCards[key];
-            } else if (quantity > 0) {
-                if (listCards[key]) {
-                    listCards[key].quantity = quantity;
-                    listCards[key].price = parseFloat(products[key].price) * quantity;
-                }
-            }
-            reloadCard();
+            return priceMatrix[color][size];
         }
     </script>
 
@@ -1305,51 +1245,27 @@ if (!isset($_SESSION['cart'])) {
     </script>
 
     <script>
-        function addToCart() {
-            // Get selected product details from the page
-            const mainImage = document.getElementById('mainImage').src;
-            const productName = document.querySelector('.product-title').textContent;
-            const discountPrice = document.getElementById('discountPrice').textContent;
-            const quantity = parseInt(document.querySelector('.quantity-input').value);
-            const color = document.getElementById('colorSelector').value;
-            const size = document.getElementById('sizeSelector').value;
+        function redirectToCheckout() {
+            const checkoutPageURL = 'checkout_page.php';
 
-            // Create a new item for the cart
-            const newItem = {
-                image: mainImage,
-                name: productName,
-                price: discountPrice,
-                quantity: quantity,
-                color: color,
-                size: size,
-            };
+            const productDetails = JSON.stringify(listCards);
+            const queryString = `products=${encodeURIComponent(productDetails)}`;
 
-            // Add the item to the cart
-            listCards.push(newItem);
-
-            // Refresh the cart display
-            reloadCard();
+            window.location.href = `${checkoutPageURL}?${queryString}`;
         }
 
     </script>
 
     <script>
-        // AJAX request example (using jQuery)
-        $.ajax({
-            type: "POST",
-            url: "add_to_cart.php",
-            data: {
-                productId: "H001",
-                productName: "AD Helmet",
-                price: 95.00,
-                quantity: 1,
-                // ... other product data
-            },
-            success: function (response) {
-                // Handle the response, e.g., update the cart UI
+        document.addEventListener("DOMContentLoaded", function () {
+            const shoppingCartImage = document.getElementById('shoppingCart');
+
+            if (shoppingCartImage) {
+                shoppingCartImage.addEventListener('click', function () {
+                    window.location.href = 'shopping_cart.php';
+                });
             }
         });
-
     </script>
 
 

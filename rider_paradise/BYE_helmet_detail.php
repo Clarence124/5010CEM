@@ -65,13 +65,13 @@ if ($result === false) {
         }
 
         .sidebar.closed {
-            width: 120px;
+            width: 100px;
             /* Adjust the width as needed */
         }
 
         .sidebar ul {
             list-style-type: none;
-            margin: 1;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -79,7 +79,7 @@ if ($result === false) {
 
         .sidebar li {
             margin-bottom: 10px;
-            width: 80%;
+            width: 100%;
         }
 
         .sidebar a {
@@ -92,7 +92,6 @@ if ($result === false) {
             width: 100%;
             padding: 10px;
             position: relative;
-            margin-right: 10px;
         }
 
         .sidebar a i {
@@ -121,6 +120,7 @@ if ($result === false) {
 
         .sidebar.closed a .item {
             justify-content: center;
+            display: none;
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -128,6 +128,7 @@ if ($result === false) {
 
         .sidebar.closed a i {
             margin-right: 0;
+
         }
 
         .sidebar.closed a span.tooltip {
@@ -135,18 +136,7 @@ if ($result === false) {
             pointer-events: auto;
         }
 
-        .sidebar.closed h3 {
-            justify-content: center;
 
-            text-indent: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .sidebar.closed h3 i {
-            margin-right: 10px;
-            display: flex;
-        }
 
         .sidebar.closed a span.tooltip {
             opacity: 0;
@@ -163,10 +153,18 @@ if ($result === false) {
             font-size: 24px;
         }
 
-        .sidebar .menu-icon {
-            font-size: 20px;
-            margin-right: 10px;
+        .sidebar.closed h3 {
+            overflow: hidden;
+            text-align: center;
         }
+
+
+
+        .sidebar .menu-icon {
+
+            font-size: 20px;
+        }
+
 
 
         .content {
@@ -559,28 +557,30 @@ if ($result === false) {
     <div class="sidebar open">
 
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-                    <div class="item"> Payment</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 

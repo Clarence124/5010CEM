@@ -93,13 +93,13 @@ $result = $conn->query($sql);
         }
 
         .sidebar.closed {
-            width: 120px;
+            width: 100px;
             /* Adjust the width as needed */
         }
 
         .sidebar ul {
             list-style-type: none;
-            margin: 1;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -107,7 +107,7 @@ $result = $conn->query($sql);
 
         .sidebar li {
             margin-bottom: 10px;
-            width: 80%;
+            width: 100%;
         }
 
         .sidebar a {
@@ -120,7 +120,6 @@ $result = $conn->query($sql);
             width: 100%;
             padding: 10px;
             position: relative;
-            margin-right: 10px;
         }
 
         .sidebar a i {
@@ -149,6 +148,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a .item {
             justify-content: center;
+            display: none;
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -156,6 +156,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a i {
             margin-right: 0;
+
         }
 
         .sidebar.closed a span.tooltip {
@@ -163,18 +164,7 @@ $result = $conn->query($sql);
             pointer-events: auto;
         }
 
-        .sidebar.closed h3 {
-            justify-content: center;
 
-            text-indent: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .sidebar.closed h3 i {
-            margin-right: 10px;
-            display: flex;
-        }
 
         .sidebar.closed a span.tooltip {
             opacity: 0;
@@ -191,9 +181,14 @@ $result = $conn->query($sql);
             font-size: 24px;
         }
 
+        .sidebar.closed h3 {
+            overflow: hidden;
+            text-align: center;
+        }
+
         .sidebar .menu-icon {
+
             font-size: 20px;
-            margin-right: 10px;
         }
 
 
@@ -254,15 +249,15 @@ $result = $conn->query($sql);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width:1070px;
+            width: 1070px;
         }
 
         .topnav h2 {
             margin: 0;
             font-size: 20px;
-            text-align:center;
-            line-height:40px;
-            height:40px;
+            text-align: center;
+            line-height: 40px;
+            height: 40px;
         }
 
         .accessories-image img {
@@ -485,7 +480,7 @@ $result = $conn->query($sql);
             display: flex;
             align-items: center;
             color: #f57224;
-            
+
         }
 
         .product-rating i.bx {
@@ -508,9 +503,9 @@ $result = $conn->query($sql);
             margin-top: 20px;
             flex: 1;
             width: 200px;
-            height: 490px;
-            position:absolute;
-            top:90px;
+            height: 600px;
+            position: absolute;
+            top: 90px;
             right: -70px;
             left: 1050px;
             bottom: 500px;
@@ -633,30 +628,31 @@ $result = $conn->query($sql);
 
 
     <div class="sidebar open">
-
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-                    <div class="item"> Payment</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 
@@ -689,13 +685,14 @@ $result = $conn->query($sql);
                         }
                         ?>
                         <div class="product">
-                            <a href="Motowolf_gloves_detail.php?id=1">
+                            <a href="Motowolf_gloves_detail.php?id=G001">
                                 <div class="product-image">
                                     <img src="pictures/Motowolf gloves.jpeg" alt="Motowolf gloves">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">MOTOWOLF Motorcycle Riding Gloves MDL0325 Breathable Gloves</h3>
-                                    <p class="product-price">Price: RM69.00</p>
+                                    <h3 class="product-title">MOTOWOLF Motorcycle Riding Gloves MDL0325 Breathable
+                                        Gloves</h3>
+                                    <p class="product-price">Price: RM69.00-RM85.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
                                         <i class="bx bx-star"></i>
@@ -709,12 +706,13 @@ $result = $conn->query($sql);
                         </div>
 
                         <div class="product">
-                            <a href="Komine_gloves_detail.php?id=2">
+                            <a href="Komine_gloves_detail.php?id=G002">
                                 <div class="product-image">
                                     <img src="pictures/Komine gloves.jpeg" alt="Komine gloves">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">KOMINE GK220 Protect Mesh Gloves Motorcycle Riding Anti-fall Gloves</h3>
+                                    <h3 class="product-title">KOMINE GK220 Protect Mesh Gloves Motorcycle Riding
+                                        Anti-fall Gloves</h3>
                                     <p class="product-price">Price: RM55.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
@@ -735,7 +733,8 @@ $result = $conn->query($sql);
                                     <img src="pictures/Suomy gloves.jpeg" alt="Suomy gloves">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">SUOMY Motorcycle Gloves Racing Motorbike Motocross Full-Finger</h3>
+                                    <h3 class="product-title">SUOMY Motorcycle Gloves Racing Motorbike Motocross
+                                        Full-Finger</h3>
                                     <p class="product-price">Price: RM45.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
@@ -755,7 +754,8 @@ $result = $conn->query($sql);
                                     <img src="pictures/Motowolf half finger gloves.jpeg" alt="Motowolf gloves">
                                 </div>
                                 <div class="product-details">
-                                    <h3 class="product-title">MOTOWOLF Motorcycle Riding Gloves MDL0302B Leather Half Finger Gloves</h3>
+                                    <h3 class="product-title">MOTOWOLF Motorcycle Riding Gloves MDL0302B Leather Half
+                                        Finger Gloves</h3>
                                     <p class="product-price">Price: RM65.00</p>
                                     <div class="product-rating">
                                         <i class="bx bx-star"></i>
@@ -768,264 +768,259 @@ $result = $conn->query($sql);
                                 </div>
                             </a>
                         </div>
-                </div>
+                    </div>
 
 
-                <div class="container-box">
-                    <div class="products-container1">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            $productId = $row['id'];
-                            $productImage = $row['filepath'];
-                            $productName = $row['title'];
-                            $productPrice = $row['price'];
-                            $productRating = $row['rating'];
-                        }
-                        ?>
-                        <div class="product1">
-                            <a href="Revit_gloves.php?id=5">
-                                <div class="product-image">
-                                    <img src="pictures/Revit gloves.jpeg" alt="Revit gloves">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">REVIT Motorcycle Top Leather Gloves Motocross Professional Racing Protective Gear</h3>
-                                    <p class="product-price">Price: RM150.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
+                    <div class="container-box">
+                        <div class="products-container1">
+                            <?php
+                            while ($row = $result->fetch_assoc()) {
+                                $productId = $row['id'];
+                                $productImage = $row['filepath'];
+                                $productName = $row['title'];
+                                $productPrice = $row['price'];
+                                $productRating = $row['rating'];
+                            }
+                            ?>
+                            <div class="product1">
+                                <a href="Revit_gloves.php?id=5">
+                                    <div class="product-image">
+                                        <img src="pictures/Revit gloves.jpeg" alt="Revit gloves">
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="Star_field_gloves_detail.php?id=6">
-                                <div class="product-image">
-                                    <img src="pictures/Sky field gloves.jpeg" alt="Star field gloves">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Star Field Knight Motorcycle Riding Biker Touch Screen Leather Gloves SKG540</h3>
-                                    <p class="product-price">Price: RM100.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="BSDDP_gloves_detail.php?id=7">
-                                <div class="product-image">
-                                    <img src="pictures/BSDDP gloves.jpeg" alt="BSDDP gloves">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">BSDDP Sport Biker Rider Sarung Tangan Full/Half Finger Glove</h3>
-                                    <p class="product-price">Price: RM25.00-RM30.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product1">
-                            <a href="North_face_jacket_detail.php?id=8">
-                                <div class="product-image">
-                                    <img src="pictures/Star field Full glove.jpeg" alt="Star field gloves">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Star Field Knight Motorcycle Riding Synthetic Leather Full Glove SKG554</h3>
-                                    <p class="product-price">Price: RM86.00</p>
-                                    <div class="product-rating">
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <i class="bx bx-star"></i>
-                                        <?= $productRating ?>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="filter-container">
-                            <div class="filter-item">
-                                <h3>Search Filter</h3>
-                                <div class="input-group">
-                                    <input type="text" id="searchFilter" placeholder="Search...">
-                                    <button id="applySearchFilter"><i class="bx bx-search"></i></button>
-                                </div>
-                            </div>
-
-                            <!-- Brand filter -->
-                            <div class="filter-item">
-                                <h3>Brand</h3>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="NIKE"> NIKE
-                                </label>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="Others"> Others
-                                </label>
-                                <label>
-                                    <input type="checkbox" class="brandFilter" value="Air jordan"> Air jordan
-                                </label>
-                            </div>
-
-                            <!-- Price range filter -->
-                            <div class="filter-item">
-                                <h3>Price Range</h3>
-                                <div class="price-filter-container">
-                                    <div class="input-group">
-                                        <div class="price-input">
-                                            RM <input type="number" id="minPrice" placeholder="Min">
-                                        </div>-
-                                        <div class="price-input">
-                                            RM <input type="number" id="maxPrice" placeholder="Max">
+                                    <div class="product-details">
+                                        <h3 class="product-title">REVIT Motorcycle Top Leather Gloves Motocross
+                                            Professional Racing Protective Gear</h3>
+                                        <p class="product-price">Price: RM150.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
                                         </div>
                                     </div>
-
-                                </div>
-                                <button id="applyPriceFilter">Apply</button>
+                                </a>
                             </div>
 
-                            <!-- Rating filter -->
-                            <div class="filter-item">
-                                <h3>Rating</h3>
-                                <div class="rating-filter">
-                                    <!-- Add rating star icons here -->
+                            <div class="product1">
+                                <a href="Star_field_gloves_detail.php?id=6">
+                                    <div class="product-image">
+                                        <img src="pictures/Sky field gloves.jpeg" alt="Star field gloves">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">Star Field Knight Motorcycle Riding Biker Touch Screen
+                                            Leather Gloves SKG540</h3>
+                                        <p class="product-price">Price: RM100.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="product1">
+                                <a href="BSDDP_gloves_detail.php?id=7">
+                                    <div class="product-image">
+                                        <img src="pictures/BSDDP gloves.jpeg" alt="BSDDP gloves">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">BSDDP Sport Biker Rider Sarung Tangan Full/Half Finger
+                                            Glove</h3>
+                                        <p class="product-price">Price: RM25.00-RM30.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="product1">
+                                <a href="North_face_jacket_detail.php?id=8">
+                                    <div class="product-image">
+                                        <img src="pictures/Star field Full glove.jpeg" alt="Star field gloves">
+                                    </div>
+                                    <div class="product-details">
+                                        <h3 class="product-title">Star Field Knight Motorcycle Riding Synthetic Leather
+                                            Full Glove SKG554</h3>
+                                        <p class="product-price">Price: RM86.00</p>
+                                        <div class="product-rating">
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <i class="bx bx-star"></i>
+                                            <?= $productRating ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="filter-container">
+                                <div class="filter-item">
+                                    <h3>Search Filter</h3>
+                                    <div class="input-group">
+                                        <input type="text" id="searchFilter" placeholder="Search...">
+                                        <button id="applySearchFilter"><i class="bx bx-search"></i></button>
+                                    </div>
+                                </div>
+
+                                <!-- Brand filter -->
+                                <div class="filter-item">
+                                    <h3>Brand</h3>
                                     <label>
-                                        <input type="checkbox" class="ratingFilter" value="5"> 5 Stars
+                                        <input type="checkbox" class="brandFilter" value="NIKE"> NIKE
                                     </label>
                                     <label>
-                                        <input type="checkbox" class="ratingFilter" value="4"> 4 Stars
+                                        <input type="checkbox" class="brandFilter" value="Others"> Others
                                     </label>
-                                    <!-- Add more rating options as needed -->
+                                    <label>
+                                        <input type="checkbox" class="brandFilter" value="Air jordan"> Air jordan
+                                    </label>
+                                </div>
+
+                                <!-- Price range filter -->
+                                <div class="filter-item">
+                                    <h3>Price Range</h3>
+                                    <div class="price-filter-container">
+                                        <div class="input-group">
+                                            <div class="price-input">
+                                                RM <input type="number" id="minPrice" placeholder="Min">
+                                            </div>-
+                                            <div class="price-input">
+                                                RM <input type="number" id="maxPrice" placeholder="Max">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button id="applyPriceFilter">Apply</button>
+                                </div>
+
+                                <!-- Rating filter -->
+                                <div class="filter-item">
+                                    <h3>Rating</h3>
+                                    <div class="rating-filter">
+                                        <!-- Add rating star icons here -->
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="5"> 5 Stars
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" class="ratingFilter" value="4"> 4 Stars
+                                        </label>
+                                        <!-- Add more rating options as needed -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="image-popup"></div>
-
-
-                </section>
+                    <div class="image-popup"></div>
 
 
-
-                <script>
-                    // Hide the image popup container, but only if the user clicks outside the image
-                    image_popup.onclick = e => {
-                        if (e.target.className == 'image-popup') {
-                            image_popup.style.display = "none";
-                        }
-                    };
+                    </section>
 
 
-                </script>
 
-                <script>
-                    $(document).ready(function () {
-                        // Toggle sidebar open and closed
-                        $('#btn').click(function () {
-                            $('.sidebar').toggleClass('open closed');
-                        });
-                    });
-                </script>
-
-                <script>
-                    // Filter products based on search text
-                    $("#applySearchFilter").click(function () {
-                        var searchText = $("#searchFilter").val().toLowerCase();
-                        $(".product").each(function () {
-                            var productName = $(this).find(".product-title").text().toLowerCase();
-                            if (productName.includes(searchText)) {
-                                $(this).show();
-                            } else {
-                                $(this).hide();
+                    <script>
+                        // Hide the image popup container, but only if the user clicks outside the image
+                        image_popup.onclick = e => {
+                            if (e.target.className == 'image-popup') {
+                                image_popup.style.display = "none";
                             }
-                        });
-                    });
+                        };
 
-                    // Filter products based on brand
-                    $(".brandFilter").click(function () {
-                        var selectedBrands = [];
-                        $(".brandFilter:checked").each(function () {
-                            selectedBrands.push($(this).val());
+
+                    </script>
+
+                    <script>
+                        $(document).ready(function () {
+                            // Toggle sidebar open and closed
+                            $('#btn').click(function () {
+                                $('.sidebar').toggleClass('open closed');
+                            });
                         });
-                        if (selectedBrands.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
+                    </script>
+
+                    <script>
+                        $("#applySearchFilter").click(function () {
+                            var searchText = $("#searchFilter").val().toLowerCase();
+                            $(".product, .product1").each(function () {
+                                var productName = $(this).find(".product-title").text().toLowerCase();
+                                if (productName.includes(searchText)) {
+                                    $(this).show();
+                                } else {
+                                    $(this).hide();
+                                }
+                            });
+                        });
+
+                        $(".brandFilter").click(function () {
+                            applyFilters();
+                        });
+
+                        $("#applyPriceFilter").click(function () {
+                            applyFilters();
+                        });
+
+                        $(".ratingFilter").click(function () {
+                            applyFilters();
+                        });
+
+                        function applyFilters() {
+                            var selectedBrands = $(".brandFilter:checked").map(function () {
+                                return $(this).val();
+                            }).get();
+
+                            var minPrice = parseFloat($("#minPrice").val()) || 0;
+                            var maxPrice = parseFloat($("#maxPrice").val()) || Infinity;
+
+                            var selectedRatings = $(".ratingFilter:checked").map(function () {
+                                return parseInt($(this).val());
+                            }).get();
+
+                            $(".product, .product1").each(function () {
                                 var productBrand = $(this).find(".brand").text().toLowerCase();
-                                if (selectedBrands.includes(productBrand)) {
+                                var productPrice = parseFloat($(this).find(".product-price").text().replace(/[^0-9.]/g, ""));
+                                var productRating = parseInt($(this).find(".product-rating").text().replace(/[^0-9]/g, ""));
+
+                                var brandFilter = selectedBrands.length === 0 || selectedBrands.includes(productBrand);
+                                var priceFilter = !isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice;
+                                var ratingFilter = selectedRatings.length === 0 || selectedRatings.includes(productRating);
+
+                                if (brandFilter && priceFilter && ratingFilter) {
                                     $(this).show();
                                 } else {
                                     $(this).hide();
                                 }
                             });
                         }
-                    });
+                    </script>
 
-                    // Filter products based on price range
-                    $("#applyPriceFilter").click(function () {
-                        var minPrice = parseFloat($("#minPrice").val());
-                        var maxPrice = parseFloat($("#maxPrice").val());
-                        $(".product").each(function () {
-                            var productPrice = parseFloat(
-                                $(this)
-                                    .find(".product-price")
-                                    .text()
-                                    .replace(/[^0-9.]/g, "")
-                            );
-                            if (!isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice) {
-                                $(this).show();
-                            } else {
-                                $(this).hide();
-                            }
+                    <script>
+                        $("#clearAllFilters").click(function () {
+                            $("#searchFilter").val('');
+                            $(".brandFilter").prop('checked', false);
+
+                            $("#minPrice").val('');
+                            $("#maxPrice").val('');
+
+
+                            $(".ratingFilter").prop('checked', false);
+
+
+                            applyFilters();
                         });
-                    });
-
-                    // Filter products based on rating
-                    $(".ratingFilter").click(function () {
-                        var selectedRatings = [];
-                        $(".ratingFilter:checked").each(function () {
-                            selectedRatings.push(parseInt($(this).val()));
-                        });
-                        if (selectedRatings.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
-                                var productRating = parseInt(
-                                    $(this)
-                                        .find(".product-rating")
-                                        .text()
-                                        .replace(/[^0-9]/g, "")
-                                );
-                                if (selectedRatings.includes(productRating)) {
-                                    $(this).show();
-                                } else {
-                                    $(this).hide();
-                                }
-                            });
-                        }
-                    });
-
-                </script>
+                    </script>
 
 
 

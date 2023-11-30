@@ -93,13 +93,13 @@ $result = $conn->query($sql);
         }
 
         .sidebar.closed {
-            width: 120px;
+            width: 100px;
             /* Adjust the width as needed */
         }
 
         .sidebar ul {
             list-style-type: none;
-            margin: 1;
+            margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -107,7 +107,7 @@ $result = $conn->query($sql);
 
         .sidebar li {
             margin-bottom: 10px;
-            width: 80%;
+            width: 100%;
         }
 
         .sidebar a {
@@ -120,7 +120,6 @@ $result = $conn->query($sql);
             width: 100%;
             padding: 10px;
             position: relative;
-            margin-right: 10px;
         }
 
         .sidebar a i {
@@ -149,6 +148,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a .item {
             justify-content: center;
+            display: none;
             text-indent: 100%;
             white-space: nowrap;
             overflow: hidden;
@@ -156,6 +156,7 @@ $result = $conn->query($sql);
 
         .sidebar.closed a i {
             margin-right: 0;
+
         }
 
         .sidebar.closed a span.tooltip {
@@ -163,18 +164,7 @@ $result = $conn->query($sql);
             pointer-events: auto;
         }
 
-        .sidebar.closed h3 {
-            justify-content: center;
 
-            text-indent: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .sidebar.closed h3 i {
-            margin-right: 10px;
-            display: flex;
-        }
 
         .sidebar.closed a span.tooltip {
             opacity: 0;
@@ -191,9 +181,16 @@ $result = $conn->query($sql);
             font-size: 24px;
         }
 
+        .sidebar.closed h3 {
+            overflow: hidden;
+            text-align: center;
+        }
+
+
+
         .sidebar .menu-icon {
+
             font-size: 20px;
-            margin-right: 10px;
         }
 
 
@@ -505,9 +502,9 @@ $result = $conn->query($sql);
             margin-top: 20px;
             flex: 1;
             width: 200px;
-            height: 490px;
-            position:absolute;
-            top:90px;
+            height: 600px;
+            position: absolute;
+            top: 90px;
             right: -50px;
             left: 1050px;
             bottom: 500px;
@@ -630,30 +627,31 @@ $result = $conn->query($sql);
 
 
     <div class="sidebar open">
-
         <ul>
-            <h3>
-                Menu
-                <i class='bx bx-menu menu-icon' id="btn"></i>
-            </h3>
-            <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
-                    <div class="item">Homepage</div>
-                </a></li>
-            <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
-                    <div class="item">Profile</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
-                    <div class="item">Spare parts</div>
-                </a></li>
-            <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                    <div class="item"> Accessories</div>
-                </a></li>
-            <li><a href="adminEvents.php"><i class="bx bx-gift"></i><span class="tooltip">Payment</span>
-                    <div class="item"> Payment</div>
-                </a></li>
-            <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                    <div class="item">Logout</div>
-                </a></li>
+            <center>
+                <li>
+                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
+                </li>
+                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
+                        <div class="item">Homepage</div>
+                    </a></li>
+                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
+                        <div class="item">Settings</div>
+                    </a></li>
+                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
+                        <div class="item">Spare Parts</div>
+                    </a></li>
+                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                        <div class="item">Accessories</div>
+                    </a></li>
+                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
+                            class="tooltip">Checkout</span>
+                        <div class="item"> Checkout</div>
+                    </a></li>
+                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                        <div class="item">Logout</div>
+                    </a></li>
+            </center>
         </ul>
     </div>
 
@@ -676,6 +674,7 @@ $result = $conn->query($sql);
             <div class=container-box>
                 <div class="products-container">
                     <?php
+                    $result->data_seek(0);
                     while ($row = $result->fetch_assoc()) {
                         $productId = $row['id'];
                         $productImage = $row['filepath'];
@@ -685,7 +684,7 @@ $result = $conn->query($sql);
                     }
                     ?>
                     <div class="product">
-                        <a href="AD_helmet_detail.php?id=1">
+                        <a href="AD_helmet_detail.php?id=H001">
                             <div class="product-image">
                                 <img src="pictures/AD Helmet.jpeg" alt="Product Image">
                             </div>
@@ -705,7 +704,7 @@ $result = $conn->query($sql);
                     </div>
 
                     <div class="product">
-                        <a href="GDM_Demon_Helmet_detail.php?id=2">
+                        <a href="GDM_Demon_Helmet_detail.php?id=H002">
                             <div class="product-image">
                                 <img src="pictures/GDM Demon Helmet.jpg" alt="GDM Helmet">
                             </div>
@@ -771,6 +770,7 @@ $result = $conn->query($sql);
             <div class=container-box>
                 <div class="products-container1">
                     <?php
+                    $result->data_seek(0);
                     while ($row = $result->fetch_assoc()) {
                         $productId = $row['id'];
                         $productImage = $row['filepath'];
@@ -785,7 +785,8 @@ $result = $conn->query($sql);
                                 <img src="pictures/Yamaha helmet.jpeg" alt="Yamaha Helmet">
                             </div>
                             <div class="product-details">
-                                <h3 class="product-title">Yamaha Rev Your Heart Motogp GP Edition  Glossy Red Y15ZR LC135 Helmet</h3>
+                                <h3 class="product-title">Yamaha Rev Your Heart Motogp GP Edition Glossy Red Y15ZR LC135
+                                    Helmet</h3>
                                 <p class="product-price">Price: RM150.00- RM250.00</p>
                                 <div class="product-rating">
                                     <i class="bx bx-star"></i>
@@ -805,7 +806,8 @@ $result = $conn->query($sql);
                                 <img src="pictures/Black samurai helmet.jpeg" alt="Black Samurai Helmet">
                             </div>
                             <div class="product-details">
-                                <h3 class="product-title">Harley retro motorcycle scorpion helmet Black samurai helmet</h3>
+                                <h3 class="product-title">Harley retro motorcycle scorpion helmet Black samurai helmet
+                                </h3>
                                 <p class="product-price">Price: RM200.00</p>
                                 <div class="product-rating">
                                     <i class="bx bx-star"></i>
@@ -845,7 +847,8 @@ $result = $conn->query($sql);
                                 <img src="pictures/Double visor helmet.jpeg" alt="Double visor Helmet">
                             </div>
                             <div class="product-details">
-                                <h3 class="product-title">Model: DFG-768 Double Visor (Anti-Scratch) Motorcycle Helmet</h3>
+                                <h3 class="product-title">Model: DFG-768 Double Visor (Anti-Scratch) Motorcycle Helmet
+                                </h3>
                                 <p class="product-price">Price: RM125.00</p>
                                 <div class="product-rating">
                                     <i class="bx bx-star"></i>
@@ -910,8 +913,23 @@ $result = $conn->query($sql);
                                 <label>
                                     <input type="checkbox" class="ratingFilter" value="4"> 4 Stars
                                 </label>
-                                <!-- Add more rating options as needed -->
+                                <label>
+                                    <input type="checkbox" class="ratingFilter" value="3"> 3 Stars
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="ratingFilter" value="2"> 2 Stars
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="ratingFilter" value="1"> 1 Stars
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="ratingFilter" value="0"> 0 Stars
+                                </label>
                             </div>
+                        </div>
+
+                        <div class="filter-item">
+                            <button id="clearAllFilters">Clear All</button>
                         </div>
                     </div>
                 </div>
@@ -950,10 +968,9 @@ $result = $conn->query($sql);
                 </script>
 
                 <script>
-                    // Filter products based on search text
                     $("#applySearchFilter").click(function () {
                         var searchText = $("#searchFilter").val().toLowerCase();
-                        $(".product").each(function () {
+                        $(".product, .product1").each(function () {
                             var productName = $(this).find(".product-title").text().toLowerCase();
                             if (productName.includes(searchText)) {
                                 $(this).show();
@@ -963,71 +980,64 @@ $result = $conn->query($sql);
                         });
                     });
 
-                    // Filter products based on brand
                     $(".brandFilter").click(function () {
-                        var selectedBrands = [];
-                        $(".brandFilter:checked").each(function () {
-                            selectedBrands.push($(this).val());
-                        });
-                        if (selectedBrands.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
-                                var productBrand = $(this).find(".brand").text().toLowerCase();
-                                if (selectedBrands.includes(productBrand)) {
-                                    $(this).show();
-                                } else {
-                                    $(this).hide();
-                                }
-                            });
-                        }
+                        applyFilters();
                     });
 
-                    // Filter products based on price range
                     $("#applyPriceFilter").click(function () {
-                        var minPrice = parseFloat($("#minPrice").val());
-                        var maxPrice = parseFloat($("#maxPrice").val());
-                        $(".product").each(function () {
-                            var productPrice = parseFloat(
-                                $(this)
-                                    .find(".product-price")
-                                    .text()
-                                    .replace(/[^0-9.]/g, "")
-                            );
-                            if (!isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice) {
+                        applyFilters();
+                    });
+
+                    $(".ratingFilter").click(function () {
+                        applyFilters();
+                    });
+
+                    function applyFilters() {
+                        var selectedBrands = $(".brandFilter:checked").map(function () {
+                            return $(this).val();
+                        }).get();
+
+                        var minPrice = parseFloat($("#minPrice").val()) || 0;
+                        var maxPrice = parseFloat($("#maxPrice").val()) || Infinity;
+
+                        var selectedRatings = $(".ratingFilter:checked").map(function () {
+                            return parseInt($(this).val());
+                        }).get();
+
+                        $(".product, .product1").each(function () {
+                            var productBrand = $(this).find(".brand").text().toLowerCase();
+                            var productPrice = parseFloat($(this).find(".product-price").text().replace(/[^0-9.]/g, ""));
+                            var productRating = parseInt($(this).find(".product-rating").text().replace(/[^0-9]/g, ""));
+
+                            var brandFilter = selectedBrands.length === 0 || selectedBrands.includes(productBrand);
+                            var priceFilter = !isNaN(productPrice) && productPrice >= minPrice && productPrice <= maxPrice;
+                            var ratingFilter = selectedRatings.length === 0 || selectedRatings.includes(productRating);
+
+                            if (brandFilter && priceFilter && ratingFilter) {
                                 $(this).show();
                             } else {
                                 $(this).hide();
                             }
                         });
-                    });
-
-                    // Filter products based on rating
-                    $(".ratingFilter").click(function () {
-                        var selectedRatings = [];
-                        $(".ratingFilter:checked").each(function () {
-                            selectedRatings.push(parseInt($(this).val()));
-                        });
-                        if (selectedRatings.length === 0) {
-                            $(".product").show();
-                        } else {
-                            $(".product").each(function () {
-                                var productRating = parseInt(
-                                    $(this)
-                                        .find(".product-rating")
-                                        .text()
-                                        .replace(/[^0-9]/g, "")
-                                );
-                                if (selectedRatings.includes(productRating)) {
-                                    $(this).show();
-                                } else {
-                                    $(this).hide();
-                                }
-                            });
-                        }
-                    });
-
+                    }
                 </script>
+
+                <script>
+                    $("#clearAllFilters").click(function () {
+                        $("#searchFilter").val('');
+                        $(".brandFilter").prop('checked', false);
+
+                        $("#minPrice").val('');
+                        $("#maxPrice").val('');
+
+
+                        $(".ratingFilter").prop('checked', false);
+
+
+                        applyFilters();
+                    });
+                </script>
+
 
 
 

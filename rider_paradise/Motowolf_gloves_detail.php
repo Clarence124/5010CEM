@@ -2,9 +2,9 @@
 include 'db_studentUsers.php';
 session_start();
 
-$productId = "J001";
+$productId = "G001";
 
-$sql = "SELECT product_id,product_name, discount_price,  stock_amount, product_color,product_size,product_quantity, product_desc, product_rating FROM jacket where product_id = '$productId'";
+$sql = "SELECT product_id,product_name, discount_price,  stock_amount, product_color,product_size,product_quantity, product_desc, product_rating FROM gloves where product_id = '$productId'";
 $result = $conn->query($sql);
 
 if ($result === false) {
@@ -19,7 +19,7 @@ if ($result === false) {
 <html>
 
 <head>
-    <title>Jacket Detail</title>
+    <title>Gloves Detail</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -756,19 +756,21 @@ if ($result === false) {
                 $productStockAmount = $row["stock_amount"];
                 $productDescription = $row["product_desc"];
                 $productRating = $row["product_rating"];
+                $productSize = $row["product_size"];
+                $productColorOptions = explode(', ', $row["product_color"]);
 
                 ?>
                 <div class="product-container">
                     <div class="product-image">
-                        <img id="mainImage" src="pictures/Nike Jacket.jpg" alt="Nike jacket">
+                        <img id="mainImage" src="pictures/Motowolf gloves.jpeg" alt="Motowolf gloves">
                         <div class="image-slider">
                             <button class="slider-button prev-button" onclick="prevImage()"><i
                                     class="bx bx-chevron-left"></i></button>
-                            <img class="thumbnail" src="thumbnail/Nike image 1.jpeg" alt="Thumbnail 1">
-                            <img class="thumbnail" src="thumbnail/Nike image 2.jpeg" alt="Thumbnail 2">
-                            <img class="thumbnail" src="thumbnail/Nike image 3.jpeg" alt="Thumbnail 3">
-                            <img class="thumbnail" src="thumbnail/Nike image 4.jpeg" alt="Thumbnail 4">
-                            <img class="thumbnail" src="thumbnail/Nike image 5.jpeg" alt="Thumbnail 5">
+                            <img class="thumbnail" src="thumbnail/Motowolf image 1.jpeg" alt="Thumbnail 1">
+                            <img class="thumbnail" src="thumbnail/Motowolf image 2.jpeg" alt="Thumbnail 2">
+                            <img class="thumbnail" src="thumbnail/Motowolf image 3.jpeg" alt="Thumbnail 3">
+                            <img class="thumbnail" src="thumbnail/Motowolf image 4.jpeg" alt="Thumbnail 4">
+                            <img class="thumbnail" src="thumbnail/Motowolf image 5.jpeg" alt="Thumbnail 5">
                             <button class="slider-button next-button" onclick="nextImage()"><i
                                     class="bx bx-chevron-right"></i></button>
                         </div>
@@ -783,8 +785,8 @@ if ($result === false) {
                         </h1>
 
                         <p class="product-price">
-                        <h2 class="original-price-strikethrough" id="originalPrice">RM85.00-RM100.00</h2>
-                        <h2 class="discounted-price" id="discountPrice">RM80.00-RM95.00</h2>
+                        <h2 class="original-price-strikethrough" id="originalPrice">RM69.00-RM85.00</h2>
+                        <h2 class="discounted-price" id="discountPrice">RM50.00-RM75.00</h2>
                         <h2 class="discount-percent">
                             <?= $discountPercent ?>
                         </h2>
@@ -792,7 +794,7 @@ if ($result === false) {
 
                         <p>Quantity:
                             <button class="quantity-button minus">-</button>
-                            <input type="text" class="quantity-input" value="<?= $productQuantity ?>" min="1" value="1">
+                            <input type="text" class="quantity-input" value="<?= $productQuantity ?>" readonly>
                             <button class="quantity-button plus">+</button>
                         <h2 class="stock-left">
                             <?= $productStockAmount ?>
@@ -803,8 +805,8 @@ if ($result === false) {
                         <h2>Color</h2>
                         <select id="colorSelector" onchange="updatePrice()">
                             <option value="Black">Black</option>
+                            <option value="Grey">Grey</option>
                             <option value="Red">Red</option>
-                            <option value="Green">Green</option>
                             <!-- Add more color options here -->
                         </select>
 
@@ -818,7 +820,8 @@ if ($result === false) {
                         </select>
 
                         <div class="button-container">
-                            <button type="button" class="add-to-cart-button" onclick="addToCart()">Add
+                            <button type="button" class="add-to-cart-button"
+                                onclick="addToCart('G001','Motowolf Gloves', 'pictures/Motowolf gloves.jpeg', 'RM69.00', 'Black', 'S', '1')">Add
                                 to
                                 Cart</button>
                             <button type="button" class="buy-now-button" onclick="redirectToCheckout()">Buy now</button>
@@ -831,9 +834,9 @@ if ($result === false) {
 
                         <h2>Rating</h2>
                         <div class="product-rating">
-                            <i class="bx bx-star"></i>
-                            <i class="bx bx-star"></i>
-                            <i class="bx bx-star"></i>
+                            <i class="bx bxs-star"></i>
+                            <i class="bx bxs-star"></i>
+                            <i class='bx bxs-star-half' ></i>
                             <i class="bx bx-star"></i>
                             <i class="bx bx-star"></i>
                             <?= $productRating ?>
@@ -851,6 +854,18 @@ if ($result === false) {
             }
             ?>
         </div>
+
+        <div class="card">
+            <h1>Add to Cart</h1>
+            <button class="clear-button" onclick="clearCart()">Clear All</button>
+            <ul class="listCard">
+            </ul>
+            <div class="checkOut">
+                <div class="total">0</div>
+                <div class="closeShopping">Close</div>
+            </div>
+        </div>
+
 
         <center>
 
@@ -1050,19 +1065,19 @@ if ($result === false) {
             // Define price adjustments based on color and size
             const priceMap = {
                 'Black': {
-                    'S': { original: 85.00, discounted: 80.00 },
-                    'M': { original: 95.00, discounted: 90.00 },
-                    'L': { original: 100.00, discounted: 95.00 },
+                    'S': { original: 69.00, discounted: 50.00 },
+                    'M': { original: 75.00, discounted: 65.00 },
+                    'L': { original: 85.00, discounted: 75.00 },
                 },
                 'Red': {
-                    'S': { original: 85.00, discounted: 79.00 },
-                    'M': { original: 95.00, discounted: 85.00 },
-                    'L': { original: 100.00, discounted: 90.00 },
+                    'S': { original: 69.00, discounted: 50.00 },
+                    'M': { original: 75.00, discounted: 65.00 },
+                    'L': { original: 85.00, discounted: 75.00 },
                 },
                 'Green': {
-                    'S': { original: 85.00, discounted: 80.00 },
-                    'M': { original: 95.00, discounted: 90.00 },
-                    'L': { original: 100.00, discounted: 95.00 },
+                    'S': { original: 69.00, discounted: 50.00 },
+                    'M': { original: 75.00, discounted: 65.00 },
+                    'L': { original: 85.00, discounted: 75.00 },
                 },
             };
 
@@ -1116,13 +1131,205 @@ if ($result === false) {
     </script>
 
     <script>
+        let openShopping = document.querySelector('.shopping');
+        let closeShopping = document.querySelector('.closeShopping');
+        let list = document.querySelector('.list');
+        let listCard = document.querySelector('.listCard');
+        let body = document.querySelector('body');
+        let total = document.querySelector('.total');
+        let quantity = document.querySelector('.quantity');
+
+        openShopping.addEventListener('click', () => {
+            body.classList.add('active');
+        })
+        closeShopping.addEventListener('click', () => {
+            body.classList.remove('active');
+        })
+
+        let listCards = [];
+
+        function addToCart(productId, productName, image, price) {
+            const color = document.getElementById('colorSelector').value;
+            const size = document.getElementById('sizeSelector').value;
+            const quantity = parseInt(document.querySelector('.quantity-input').value);
+
+            console.log('Adding to cart:', productId, productName, image, price, color, size, quantity);
+
+            if (isNaN(price)) {
+                // Handle cases where discountPrice is not a valid number, e.g., "RM85.00"
+                const priceParts = price.split('RM');
+                if (priceParts.length === 2) {
+                    price = parseFloat(priceParts[1]);
+                } else {
+                    // Handle other cases here as needed
+                }
+            }
+
+            const productDetails = {
+                product_id: productId,
+                product_name: productName,
+                filepath: image,
+                discount_product: price,
+                product_color: color,
+                product_size: size,
+                product_quantity: quantity
+            };
+
+            console.log('Sending product details:', productDetails);
+
+            fetch('insert_into_cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(productDetails),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        const productDetails = {
+                            image: mainImage,
+                            product_id: productId,
+                            product_name: productName,
+                            filepath: image,
+                            discount_product: price,
+                            product_color: color,
+                            product_size: size,
+                            product_quantity: quantity
+                        };
+                        listCards.push(productDetails);
+                        reloadCard();
+                    } else {
+                        console.error('Error inserting into cart:', data.error);
+                    }
+                })
+                .catch((error) => console.error('Error inserting into cart:', error));
+        }
+
+
+
+        // Define the "reloadCard" function to display cart contents and total
+        function reloadCard() {
+            console.log('Reloading cart');
+            listCard.innerHTML = '';
+            let totalPrice = 0;
+            let totalQuantity = 0;
+
+            listCards.forEach((item, index) => {
+                if (item && typeof item.discount_product === 'number' && !isNaN(item.discount_product) && typeof item.product_quantity === 'number' && !isNaN(item.product_quantity)) {
+                    const itemTotal = item.discount_product * item.product_quantity;
+
+                    let newDiv = document.createElement('li');
+                    newDiv.innerHTML = `
+                <div><img src="${item.filepath}" /></div>
+                <div>${item.product_name}</div>
+                <div>RM ${item.discount_product.toLocaleString()}</div>
+                <div class="quantity-actions">
+                    <button onclick="changeQuantity(${index}, ${item.product_quantity - 1})">-</button>
+                    <div class="count">${item.product_quantity}</div>
+                    <button onclick="changeQuantity(${index}, ${item.product_quantity + 1})">+</button>
+                </div>
+                <button onclick="removeProduct(${index})">Remove</button>
+            `;
+                    listCard.appendChild(newDiv);
+                    totalPrice += itemTotal;
+                    totalQuantity += item.product_quantity;
+                }
+            });
+
+
+            // Update the total and quantity display
+            total.innerText = 'Total: RM ' + totalPrice.toFixed(2);
+            quantity.innerText = totalQuantity;
+        }
+
+        function changeQuantity(index, quantity) {
+            if (quantity == 0) {
+                listCards = splice(index, 1);
+            } else if (quantity > 0) {
+                listCards[index].product_quantity = quantity;
+            }
+            reloadCard();
+        }
+
+        function loadCartItems() {
+            const storedCartItems = localStorage.getItem('cartItems');
+
+            if (storedCartItems) {
+                // If there are stored cart items, parse and assign them to listCards
+                listCards = JSON.parse(storedCartItems);
+                reloadCard(); // Update the cart display
+            } else {
+                // If there are no stored cart items, fetch the data from the server
+                fetch('get_cart_items.php')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            listCards = data.items;
+                            reloadCard();
+
+                            // Store the retrieved cart items in local storage for future use
+                            localStorage.setItem('cartItems', JSON.stringify(listCards));
+                        } else {
+                            console.error('Error loading cart items:', data.error);
+                        }
+                    })
+                    .catch((error) => console.error('Error loading cart items:', error));
+            }
+            loadCartItems();
+        }
+
+        function removeProduct(index) {
+            // Remove the product from listCards
+            listCards.splice(index, 1);
+            // Reload the listCard to reflect the changes
+            reloadCard();
+        }
+
+        function clearCart() {
+            listCards = []; // Reset the listCards array
+            reloadCard();   // Clear the listCard
+        }
+
+    </script>
+
+    <script>
         // Assuming you have a product ID available as $productId
-        const productId = 'J001';
+        const productId = 'G001';
 
         document.getElementById('view_ratings').addEventListener('click', function () {
             // Redirect to the "rating.php" page with the product identifier as a query parameter
             window.location.href = `rating.php?product=${productId}`;
         });
+    </script>
+
+    <script>
+        function addToCart() {
+            // Get selected product details from the page
+            const mainImage = document.getElementById('mainImage').src;
+            const productName = document.querySelector('.product-title').textContent;
+            const discountPrice = document.getElementById('discountPrice').textContent;
+            const quantity = parseInt(document.querySelector('.quantity-input').value);
+            const color = document.getElementById('colorSelector').value;
+            const size = document.getElementById('sizeSelector').value;
+
+            // Create a new item for the cart
+            const newItem = {
+                image: mainImage,
+                name: productName,
+                price: discountPrice,
+                quantity: quantity,
+                color: color,
+                size: size,
+            };
+
+            // Add the item to the cart
+            listCards.push(newItem);
+
+            // Refresh the cart display
+            reloadCard();
+        }
+
     </script>
 
     <script>
@@ -1136,77 +1343,6 @@ if ($result === false) {
         }
 
     </script>
-
-    <script>
-        let shoppingCart = '';
-
-
-        function addToCart() {
-            // Define your product details
-            const productId = 'J001';
-            const productImage = "pictures/Nike_Jacket.jpg";
-            const productName = 'NIKE Jacket Waterproof Jaket Kalis Air Windbreaker Jaket Motor Unisex';
-
-            const colorSelect = document.getElementById('colorSelector');
-            const sizeSelect = document.getElementById('sizeSelector');
-
-            const color = colorSelect.value;
-            const size = sizeSelect.value;
-
-            const price = calculatePrice(color, size);
-
-            const data = {
-                product_id: productId,
-                productImage: productImage,
-                productName: productName,
-                price: price,
-                color: color,
-                size: size,
-                quantity: 1,
-            };
-
-            fetch('insert_into_cart.php', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => {
-                    if (response.ok) {
-                        const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
-                        shoppingCart.push(data);
-                        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-
-                        console.log('Product added to the cart successfully.');
-                    } else {
-                        console.error('Error adding the product to the cart.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-
-        function calculatePrice(color, size) {
-            const priceMatrix = {
-                'Black': {
-                    'S': 80.00,
-                    'M': 90.00,
-                    'L': 95.00,
-                },
-                'Red': {
-                    'S': 79.00,
-                    'M': 85.00,
-                    'L': 90.00,
-                },
-            };
-
-            return priceMatrix[color][size];
-        }
-    </script>
-
 
 
 

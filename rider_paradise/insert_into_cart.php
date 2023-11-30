@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost";
+$servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "inti_studentweb";
@@ -12,8 +12,12 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Check if required data is present and not null
-if (isset($data['productImage']) && isset($data['productName']) && isset($data['price']) && isset($data['color']) && isset($data['size']) && isset($data['quantity'])) {
+if (
+    isset($data['product_id']) && isset($data['productImage']) &&
+    isset($data['productName']) && isset($data['price']) &&
+    isset($data['color']) && isset($data['size']) && isset($data['quantity'])
+) {
+    $product_id = $data['product_id'];
     $productImage = $data['productImage'];
     $productName = $data['productName'];
     $price = $data['price'];
@@ -21,9 +25,9 @@ if (isset($data['productImage']) && isset($data['productName']) && isset($data['
     $size = $data['size'];
     $quantity = $data['quantity'];
 
-    $insertQuery = "INSERT INTO add_to_cart (productImage, productName, price, color, size, quantity) VALUES (?, ?, ?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO add_to_cart (product_id, productImage, productName, price, color, size, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($insertQuery);
-    $stmt->bind_param("ssdssd",$productImage, $productName, $price, $color, $size, $quantity);
+    $stmt->bind_param("ssdssdd", $product_id, $productImage, $productName, $price, $color, $size, $quantity);
 
     if ($stmt->execute()) {
         echo "Product added to the cart successfully.";

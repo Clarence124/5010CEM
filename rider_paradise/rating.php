@@ -22,7 +22,7 @@
 <body>
     <div class="container">
         <h1 class="mt-5 mb-5">Product Review & Rating </h1>
-        <a href="AD_helmet_detail.php" class="btn btn-secondary">Back to Helmet Details</a>
+        <a href="AD_helmet_detail.php" class="btn btn-secondary">Back to Accessories Details</a>
         <div class="card">
             <div class="card-header">Review </div>
             <div class="card-body">

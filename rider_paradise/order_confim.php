@@ -1,39 +1,8 @@
-<?php
-session_start();
-
-
-$userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-$_SESSION['user_id'] = 2;
-
-$result = null;
-
-if ($userId) {
-    if ($conn) {
-        $query = "SELECT * FROM userpaymentdetails WHERE user_id = $userId";
-        $result = mysqli_query($conn, $query);
-    } else {
-        echo "Database connection not established.";
-    }
-} else {
-    echo "User ID not set.";
-}
-
-if ($result) {
-    $paymentDetails = mysqli_fetch_assoc($result);
-    ?>
-    <div class="row">
-        <!-- Rest of your code -->
-    </div>
-    <?php
-}
-?>
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Checkout page</title>
+    <title>Order Confirmation</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -46,12 +15,16 @@ if ($result) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href= " https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js" rel='spreadsheet'>
+    <link href= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel='spreadsheet'>
+    
+   
 
 
 
     <style type="text/css">
-        /* Default styles */
         body {
             margin: 0;
             padding: 0;
@@ -312,11 +285,6 @@ if ($result) {
             border: solid;
             border-radius: 25px;
             margin: 0 20px 20px 0;
-        }
-
-        .images {
-            width: 1040px;
-            height: 1400px;
         }
 
         .images a:hover span {
@@ -726,361 +694,281 @@ if ($result) {
             margin: 0 10px;
         }
 
-        .row {
-            display: -ms-flexbox;
-            /* IE10 */
-            display: flex;
-            -ms-flex-wrap: wrap;
-            /* IE10 */
-            flex-wrap: wrap;
-            margin: 0 -16px;
+        body {
+            background-color: #ffe8d2;
+            font-family: 'Montserrat', sans-serif
         }
 
-        .col-25 {
-            -ms-flex: 25%;
-            /* IE10 */
-            flex: 25%;
-            position: relative;
-            top: -1350px;
-            right: -600px;
-
+        .card {
+            border: none
         }
 
-        .col-50 {
-            -ms-flex: 50%;
-            /* IE10 */
-            flex: 50%;
+        .logo {
+            background-color: #eeeeeea8
         }
 
-        .col-75 {
-            -ms-flex: 75%;
-            /* IE10 */
-            flex: 75%;
-            width: 40%;
+        .totals tr td {
+            font-size: 13px
         }
 
-        .col-25,
-        .col-50,
-        .col-75 {
-            padding: 0 16px;
+        .footer {
+            background-color: #eeeeeea8
         }
 
-        .container {
-            background-color: #f2f2f2;
-            padding: 5px 20px 15px 20px;
-            border: 1px solid lightgrey;
-            border-radius: 3px;
-            width: 500px;
+        .footer span {
+            font-size: 12px
         }
 
-        .container1 {
-            background-color: #f2f2f2;
-            padding: 5px 20px 15px 20px;
-            border: 1px solid lightgrey;
-            border-radius: 3px;
-            width: 400px;
-            height: 600px;
+        .product-qty span {
+            font-size: 12px;
+            color: #dedbdb
         }
 
-        input[type=text] {
-            width: 80%;
-            margin-bottom: 20px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 15px;
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        body {
+            background-color: #ffe8d2;
+            font-family: 'Montserrat', sans-serif
         }
 
-        label {
-            margin-bottom: 10px;
-            display: block;
+        .card {
+            border: none
         }
 
-        .icon-container {
-            margin-bottom: 20px;
-            padding: 7px 0;
-            font-size: 24px;
+        .logo {
+            background-color: #eeeeeea8
         }
 
-        .btn {
-            background: linear-gradient(to left, #99ccff 0%, #003399 100%);
-            color: black;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            width: 100%;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 20px;
+        .totals tr td {
+            font-size: 13px
         }
 
-        .btn:hover {
-            background: linear-gradient(to left, #003399 0%, #99ccff 100%);
+        .footer {
+            background-color: #eeeeeea8
         }
 
-        a {
-            color: #2196F3;
+        .footer span {
+            font-size: 12px
         }
 
-        hr {
-            border: 1px solid lightgrey;
-        }
-
-        span.price {
-            float: right;
-            color: grey;
-        }
-
-        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-        @media (max-width: 800px) {
-            .row {
-                flex-direction: column-reverse;
-            }
-
-            .col-25 {
-                margin-bottom: 20px;
-            }
-        }
-
-        .cart-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .cart-table th: text-align: left;
-
-        .cart-table th,
-        .cart-table td {
-            padding: 8px;
-            text-align: center;
-        }
-
-        .cart-table td {
-            width: 25%;
-            padding: 8px;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-
-        }
-
-        .cart-table td img {
-            max-width: 100%;
-        }
-
-        .cart-table thead {
-            background-color: #f2f2f2;
-        }
-
-        .cart-table th {
-            font-weight: bold;
-        }
-
-        .cart-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .cart-image {
-            max-width: 5%;
-            height: 5%;
-        }
-
-        .cart-wrapper {
-            max-width: 100%;
-            overflow-x: auto;
+        .product-qty span {
+            font-size: 12px;
+            color: #dedbdb
         }
     </style>
 </head>
+</style>
+</head>
+<div class="sidebar open">
 
-<body>
+    <ul>
+        <h3>
+            Menu
+            <i class='bx bx-menu menu-icon' id="btn"></i>
+        </h3>
+        <li><a href="adminDashboard.php"><i class="bx bx-grid-alt"> </i><span class="tooltip">Homepage</span>
+                <div class="item">Homepage</div>
+            </a></li>
+        <li><a href="adminStudentList.php"><i class="bx bx-user"></i><span class="tooltip">Profile</span>
+                <div class="item">Profile</div>
+            </a></li>
+        <li><a href="adminEvents.php"><i class="bx bx-cog"></i><span class="tooltip">Spare parts</span>
+                <div class="item">Spare parts</div>
+            </a></li>
+        <li><a href="adminAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
+                <div class="item"> Accessories</div>
+            </a></li>
+        <li><a href="checkout_page.php"><i class="bx bx-gift"></i><span class="tooltip">Checkout</span>
+                <div class="item"> Checkout</div>
+            </a></li>
+        <li><a href="logoutweb.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
+                <div class="item">Logout</div>
+            </a></li>
+    </ul>
+</div>
 
-
-    <div class="sidebar open">
-        <ul>
-            <center>
-                <li>
-                    <h3>Menu</h3><i class='bx bx-menu menu-icon' id="btn"></i>
-                </li>
-                <li><a href="homepage.php"><i class="bx bx-grid-alt"></i><span class="tooltip">Homepage</span>
-                        <div class="item">Homepage</div>
-                    </a></li>
-                <li><a href="userSettingsPage.php"><i class="bx bx-cog"></i><span class="tooltip">Settings</span>
-                        <div class="item">Settings</div>
-                    </a></li>
-                <li><a href="#"><i class="bx bx-cog"></i><span class="tooltip">Spare Parts</span>
-                        <div class="item">Spare Parts</div>
-                    </a></li>
-                <li><a href="userAccessories.php"><i class="bx bx-gift"></i><span class="tooltip">Accessories</span>
-                        <div class="item">Accessories</div>
-                    </a></li>
-                <li><a href="checkout_page.php"><i class='bx bxs-cart-download'></i><span
-                            class="tooltip">Checkout</span>
-                        <div class="item"> Checkout</div>
-                    </a></li>
-                <li><a href="logout.php"><i class="bx bx-log-out"></i><span class="tooltip">Logout</span>
-                        <div class="item">Logout</div>
-                    </a></li>
-            </center>
-        </ul>
+<div class="content">
+    <div class="topnav">
+        <div class="accessories-image">
+            <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
+        </div>
+        <center>
+            <h2>Checkout</h2>
+        </center>
     </div>
 
-
-    <div class="content">
-        <div class="topnav">
-            <div class="accessories-image">
-                <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
-            </div>
-            <center>
-                <h2>Checkout</h2>
-            </center>
-            <div class="shopping" id="shoppingCart">
-                <img src="pictures/shopping.svg" alt="Shopping Cart">
-                <span class="quantity">0</span>
-            </div>
-        </div>
-
-        <div class="images">
-            <div class="col-75">
-                <div class="container">
-                    <form action="order_confirm.php" method post>
-
-                        <div class="row">
-                            <div class="col-50">
-                                <h3>Billing Address</h3>
-                                <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                                <input type="text" id="fname" name="firstname" placeholder="Faraz"
-                                    value="<?= $paymentDetails['fullname'] ?? '' ?>">
-                                <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                                <input type="text" id="email" name="email" placeholder="codewithfaraz@example.com"
-                                    value="<?= $paymentDetails['email'] ?? '' ?>">
-                                <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                                <input type="text" id="adr" name="address" placeholder="Mira Bhayandar Road"
-                                    value="<?= $paymentDetails['address'] ?? '' ?>">
-                                <label for="city"><i class="fa fa-institution"></i> City</label>
-                                <input type="text" id="city" name="city" placeholder="Mumbai"
-                                    value="<?= $paymentDetails['city'] ?? '' ?>">
-
-                                <div class="row">
-                                    <div class="col-50">
-                                        <label for="state">State</label>
-                                        <input type="text" id="state" name="state" placeholder="MH"
-                                            value="<?= $paymentDetails['state'] ?? '' ?>">
-                                    </div>
-                                    <div class="col-50">
-                                        <label for="zip">Zip</label>
-                                        <input type="text" id="zip" name="zip" placeholder="400001"
-                                            value="<?= $paymentDetails['zip'] ?? '' ?>">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-50">
-                                <h3>Payment</h3>
-                                <label for="fname">Accepted Cards</label>
-                                <div class="icon-container">
-                                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                                    <i class="fa fa-cc-discover" style="color:orange;"></i>
-                                </div>
-                                <label for="cname">Name on Card</label>
-                                <input type="text" id="cname" name="cardname" placeholder="Faraz"
-                                    value="<?= $paymentDetails['cardname'] ?? '' ?>">
-                                <label for="ccnum">Credit card number</label>
-                                <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"
-                                    value="<?= $paymentDetails['cardnum'] ?? '' ?>">
-                                <label for="expmonth">Exp Month</label>
-                                <input type="text" id="expmonth" name="expmonth" placeholder="December"
-                                    value="<?= $paymentDetails['expmonth'] ?? '' ?>">
-                                <div class="row">
-                                    <div class="col-50">
-                                        <label for="expyear">Exp Year</label>
-                                        <input type="text" id="expyear" name="expyear" placeholder="2027"
-                                            value="<?= $paymentDetails['expyear'] ?? '' ?>">
-                                    </div>
-                                    <div class="col-50">
-                                        <label for="cvv">CVV</label>
-                                        <input type="text" id="cvv" name="cvv" placeholder="123"
-                                            value="<?= $paymentDetails['cvvcode'] ?? '' ?>">
-                                    </div>
-                                </div>
-                            </div>
-
+    <div class="images">
+        <div class="container mt-5 mb-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="text-left logo p-2 px-5"> <img src="https://i.imgur.com/2zDU056.png" width="50">
                         </div>
-                        <label>
-                            <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                        </label>
-                        <input type="submit" value="Continue to checkout" class="btn">
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-25">
-                <div class="container1">
-                    <h4>Cart <div class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b
-                                id="cart-item-count">0</b></div>
-                    </h4>
-                    <div class="cart-wrapper">
-                        <table id="cart-items" class="cart-table">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Discount Product</th>
-                                    <th>Color</th>
-                                    <th>Size</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Cart items will be added here -->
-                            </tbody>
-                        </table>
+                        <div class="invoice p-5">
+                            <h5>Your order Confirmed!</h5> <span class="font-weight-bold d-block mt-4">Hello,
+                                Chris</span> <span>You order has been confirmed and will be shipped in next two
+                                days!</span>
+                            <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="py-2"> <span class="d-block text-muted">Order Date</span>
+                                                    <span>12 Jan,2018</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2"> <span class="d-block text-muted">Order No</span>
+                                                    <span>MT12332345</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2"> <span class="d-block text-muted">Payment</span>
+                                                    <span><img
+                                                            src="https://img.icons8.com/color/48/000000/mastercard.png"
+                                                            width="20" /></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2"> <span class="d-block text-muted">Shiping
+                                                        Address</span> <span>414 Advert Avenue, NY,USA</span> </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="product border-bottom table-responsive">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td width="20%"> <img src="https://i.imgur.com/u11K1qd.jpg" width="90">
+                                            </td>
+                                            <td width="60%"> <span class="font-weight-bold">Men's Sports cap</span>
+                                                <div class="product-qty"> <span class="d-block">Quantity:1</span>
+                                                    <span>Color:Dark</span>
+                                                </div>
+                                            </td>
+                                            <td width="20%">
+                                                <div class="text-right"> <span class="font-weight-bold">$67.50</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="20%"> <img src="https://i.imgur.com/SmBOua9.jpg" width="70">
+                                            </td>
+                                            <td width="60%"> <span class="font-weight-bold">Men's Collar T-shirt</span>
+                                                <div class="product-qty"> <span class="d-block">Quantity:1</span>
+                                                    <span>Color:Orange</span>
+                                                </div>
+                                            </td>
+                                            <td width="20%">
+                                                <div class="text-right"> <span class="font-weight-bold">$77.50</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row d-flex justify-content-end">
+                                <div class="col-md-5">
+                                    <table class="table table-borderless">
+                                        <tbody class="totals">
+                                            <tr>
+                                                <td>
+                                                    <div class="text-left"> <span class="text-muted">Subtotal</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-right"> <span>$168.50</span> </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="text-left"> <span class="text-muted">Shipping Fee</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-right"> <span>$22</span> </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="text-left"> <span class="text-muted">Tax Fee</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-right"> <span>$7.65</span> </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="text-left"> <span class="text-muted">Discount</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-right"> <span class="text-success">$168.50</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="border-top border-bottom">
+                                                <td>
+                                                    <div class="text-left"> <span
+                                                            class="font-weight-bold">Subtotal</span> </div>
+                                                </td>
+                                                <td>
+                                                    <div class="text-right"> <span
+                                                            class="font-weight-bold">$238.50</span> </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <p>We will be sending shipping confirmation email when the item shipped successfully!</p>
+                            <p class="font-weight-bold mb-0">Thanks for shopping with us!</p> <span>Nike Team</span>
+                        </div>
+                        <div class="d-flex justify-content-between footer p-3"> <span>Need Help? visit our <a href="#">
+                                    help center</a></span> <span>12 June, 2020</span> </div>
                     </div>
-                    <p>Total
-                    <div class="price" style="color:black"><b id="cart-total">RM0.00</b></div>
-                    </p>
-
                 </div>
             </div>
-
-
-
-
-            <center>
-
-
-
-
-
-
-
-            </center>
-
         </div>
 
 
 
+        <center>
+
+
+
+
+
+
+
+        </center>
+
     </div>
 
 
-    </section>
+
+</div>
+
+
+</section>
 
 
 
-    <script>
-        // Container we'll use to output the image
-        let image_popup = document.querySelector('.image-popup');
-        // Iterate the images and apply the onclick event to each individual image
-        document.querySelectorAll('.images a').forEach(img_link => {
-            img_link.onclick = e => {
-                e.preventDefault();
-                let img_meta = img_link.querySelector('img');
-                let img = new Image();
-                img.onload = () => {
-                    // Create the pop out image
-                    image_popup.innerHTML = `
+<script>
+    // Container we'll use to output the image
+    let image_popup = document.querySelector('.image-popup');
+    // Iterate the images and apply the onclick event to each individual image
+    document.querySelectorAll('.images a').forEach(img_link => {
+        img_link.onclick = e => {
+            e.preventDefault();
+            let img_meta = img_link.querySelector('img');
+            let img = new Image();
+            img.onload = () => {
+                // Create the pop out image
+                image_popup.innerHTML = `
         <div class="con" style="overflow-y:scroll";>
           <h3>${img_meta.dataset.title}</h3>
           </br>
@@ -1092,98 +980,83 @@ if ($result) {
 
         </div>
       `;
-                    image_popup.style.display = 'flex';
-                };
-                img.src = img_meta.src;
+                image_popup.style.display = 'flex';
             };
-        });
-
-        image_popup.onclick = e => {
-            if (e.target.className == 'image-popup') {
-                image_popup.style.display = "none";
-            }
+            img.src = img_meta.src;
         };
+    });
+
+    image_popup.onclick = e => {
+        if (e.target.className == 'image-popup') {
+            image_popup.style.display = "none";
+        }
+    };
 
 
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function () {
-            // Toggle sidebar open and closed
-            $('#btn').click(function () {
-                $('.sidebar').toggleClass('open closed');
-            });
+<script>
+    $(document).ready(function () {
+        // Toggle sidebar open and closed
+        $('#btn').click(function () {
+            $('.sidebar').toggleClass('open closed');
         });
-    </script>
+    });
+</script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const cartTable = document.getElementById('cart-items');
-            const cartTotalElement = document.getElementById('cart-total');
-            const cartItemCountElement = document.getElementById('cart-item-count');
-
-            let shoppingCart = [];
-
-            loadCartFromLocalStorage();
-            updateCartDisplay();
-
-            function loadCartFromLocalStorage() {
-                const savedCart = localStorage.getItem('shoppingCart');
-                if (savedCart) {
-                    shoppingCart = JSON.parse(savedCart);
+<script>
+    function loadCartItems() {
+        fetch('get_cart_items.php') // Replace with the actual URL to fetch cart items
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    listCards = data.items; // Update the listCards with the fetched data
+                    reloadCart();
+                } else {
+                    console.error('Error loading cart items:', data.error);
                 }
-            }
+            })
+            .catch((error) => console.error('Error loading cart items:', error));
+    }
 
-            function updateCartDisplay() {
-                // Clear existing rows
-                cartTable.innerHTML = '';
+    function reloadCart() {
+        const cartTable = document.getElementById('cart-items').getElementsByTagName('tbody')[0];
+        cartTable.innerHTML = ''; // Clear existing rows
 
-                shoppingCart.forEach(item => {
-                    const row = cartTable.insertRow();
-                    const imageCell = row.insertCell(0);
-                    const nameCell = row.insertCell(1);
-                    const discountCell = row.insertCell(2);
-                    const quantityCell = row.insertCell(3);
+        let totalPrice = 0;
+        let totalQuantity = 0;
 
-                    const image = new Image();
-                    image.src = item.productImage;
-                    image.alt = item.productName;
-                    image.width = 50;
-                    image.height = 50;
+        listCards.forEach((item) => {
+            let newRow = cartTable.insertRow(-1); // Append a new row
+            let cell1 = newRow.insertCell(0); // Image
+            let cell2 = newRow.insertCell(1); // Product Name
+            let cell3 = newRow.insertCell(2); // Discount Product
+            let cell4 = newRow.insertCell(3); // Quantity
 
-                    imageCell.appendChild(image);
-                    nameCell.textContent = item.productName;
-                    discountCell.textContent = `RM ${item.price.toFixed(2)}`;
-                    quantityCell.textContent = item.quantity;
-                });
+            cell1.innerHTML = `<img src="${item.productImage}" />`;
+            cell2.textContent = item.productName;
+            cell3.textContent = item.price.toLocaleString();
+            cell4.textContent = item.quantity;
 
-                // Update total price
-                updateTotalPrice();
+            const discountValue = parseFloat(item.price.replace('RM', ''));
 
-                // Update cart item count
-                cartItemCountElement.textContent = shoppingCart.length;
-            }
+            const itemTotal = discountValue * item.quantity;
 
-            function updateTotalPrice() {
-                const totalCartValue = shoppingCart.reduce((total, item) => {
-                    return total + item.quantity * item.price;
-                }, 0);
-                cartTotalElement.textContent = `RM ${totalCartValue.toFixed(2)}`;
-            }
+            console.log(`Item Total: RM ${itemTotal.toFixed(2)}`)
+            totalPrice += itemTotal;
+            totalQuantity += item.quantity;
         });
-    </script>
+
+        console.log(`Total Price: RM ${totalPrice.toFixed(2)}`);
+        document.getElementById('cart-total').textContent = 'RM ' + totalPrice.toFixed(2);
+        document.getElementById('cart-item-count').textContent = listCards.length;
+
+    }
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const shoppingCartImage = document.getElementById('shoppingCart');
 
-            if (shoppingCartImage) {
-                shoppingCartImage.addEventListener('click', function () {
-                    window.location.href = 'shopping_cart.php';
-                });
-            }
-        });
-    </script>
+    // Call the function to load cart items when the page loads
+    loadCartItems();
+</script>
 
 </html>

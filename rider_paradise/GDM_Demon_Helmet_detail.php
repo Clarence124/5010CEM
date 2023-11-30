@@ -2,9 +2,9 @@
 include 'db_studentUsers.php';
 session_start();
 
-$productId = 2;
+$productId = "H002";
 
-$sql = "SELECT product_id, filepath, product_name, product_price, product_color, product_quantity, product_desc, product_speci, product_rating FROM product WHERE product_id = $productId";
+$sql = "SELECT product_id,product_name, discount_price,  stock_amount, product_color,product_size,product_quantity, product_desc, product_rating FROM helmet where product_id = '$productId'";
 $result = $conn->query($sql);
 
 if ($result === false) {
@@ -27,6 +27,7 @@ if ($result === false) {
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
 
     <style type="text/css">
@@ -464,10 +465,18 @@ if ($result === false) {
 
         .product-price {
             font-size: 18px;
+            display: flex;
+            align-items: center;
         }
 
+        .button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button,
         .buy-now-button {
-            display: block;
+            display: inline-block;
             /* Make it a block-level element */
             margin-top: 10px;
             /* Adjust the margin to control spacing */
@@ -510,12 +519,10 @@ if ($result === false) {
 
         .quantity-button:hover {
             background-color: #0056b3;
-            /* Button background color on hover */
         }
 
         .quantity-button:active {
             transform: scale(0.95);
-            /* Button scale on click */
         }
 
         .quantity-input {
@@ -541,14 +548,155 @@ if ($result === false) {
         }
 
         .stock-left {
-            font-size: 14px;
-            /* Adjust the font size as needed */
-            color: #666;
-            /* Choose your desired text color */
+            display: flex;
+            align-items: center;
             margin-left: 10px;
-            /* Add some spacing to the left of the text */
+            font-size: 14px;
+            color: #666;
             font-weight: bold;
-            /* Make the text bold if desired */
+            position: absolute;
+            top: 355px;
+            right: 380px;
+
+        }
+
+        .quantity-button.plus {
+            margin-right: 10px;
+        }
+
+        .original-price-strikethrough {
+            text-decoration: line-through;
+            color: #888;
+            font-size: 15px;
+            margin-right: 10px;
+        }
+
+        .discounted-price {
+            margin-right: 10px;
+            display: flex;
+            font-weight: bold;
+            color: #E74C3C;
+            position: relative;
+            top: -49px;
+            right: -160px;
+
+        }
+
+        .discount-percent {
+            margin-right: 10px;
+            display: flex;
+            font-weight: bold;
+            color: #E74C3C;
+            position: static;
+            top: -90px;
+            right: -400px;
+            font-size: 10px;
+            padding-left: 10px;
+        }
+
+        .shopping {
+            position: relative;
+            text-align: right;
+        }
+
+        .shopping img {
+            width: 25px;
+            position: relative;
+            left: -20px;
+        }
+
+        .shopping span {
+            background: red;
+            border-radius: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: absolute;
+            top: -6px;
+            left: -20%;
+            right: 40px;
+            font-size: 10px;
+            padding: 3px 10px;
+        }
+
+        .card {
+            position: fixed;
+            top: 0;
+            left: 100%;
+            width: 500px;
+            background-color: #453E3B;
+            height: 100vh;
+            transition: 0.5s;
+        }
+
+        .active .card {
+            left: calc(100% - 500px);
+        }
+
+        .active .container {
+            transform: translateX(-200px);
+        }
+
+        .card h1 {
+            color: #E8BC0E;
+            font-weight: 100;
+            margin: 0;
+            padding: 0 20px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card .checkOut {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+
+        .card .checkOut div {
+            background-color: #E8BC0E;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .card .checkOut div:nth-child(2) {
+            background-color: #1C1F25;
+            color: #fff;
+        }
+
+        .listCard li {
+            display: grid;
+            grid-template-columns: 100px repeat(3, 1fr);
+            color: #fff;
+            row-gap: 10px;
+        }
+
+        .listCard li div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .listCard li img {
+            width: 90%;
+        }
+
+        .listCard li button {
+            background-color: #fff5;
+            border: none;
+        }
+
+        .listCard .count {
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -591,48 +739,38 @@ if ($result === false) {
                 <img src="pictures/R paradise logo.jpg" ,alt="Rider paradise logo">
             </div>
             <h2>Accessories</h2>
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search.." name="search">
-                <button type="submit"><i class="bx bx-search"></i></button>
-            </form>
+            <div class="shopping">
+                <img src="pictures/shopping.svg">
+                <span class="quantity">0</span>
+            </div>
         </div>
-
 
         <div class="images">
             <?php
             while ($row = $result->fetch_assoc()) {
                 $productId = $row["product_id"];
                 $productName = $row["product_name"];
-                $productPrice = $row["product_price"];
                 $productQuantity = $row["product_quantity"];
+                $discountPercent = $row["discount_price"];
+                $productStockAmount = $row["stock_amount"];
                 $productDescription = $row["product_desc"];
-                $productSpecification = $row["product_speci"];
                 $productRating = $row["product_rating"];
+                $productSize = $row["product_size"];
                 $productColorOptions = explode(', ', $row["product_color"]);
-
-                $productSpecs = explode(', ', $row["product_speci"]);
-
-
-                $orderedSpecs = [];
-
-                foreach ($productSpecs as $spec) {
-                    list($key, $value) = explode(': ', $spec, 2); // Limit the explode to 2 parts
-                    $orderedSpecs[$key] = $value;
-                }
 
                 ?>
                 <!-- Display the product information -->
                 <div class="product-container">
                     <div class="product-image">
-                        <img id="mainImage" src="pictures/GDM Demon Helmet.jpg" alt="GDM Demon Helmet">
+                        <img id="mainImage" src="pictures/AD Helmet.jpeg" alt="AD Helmet">
                         <div class="image-slider">
                             <button class="slider-button prev-button" onclick="prevImage()"><i
                                     class="bx bx-chevron-left"></i></button>
-                            <img class="thumbnail" src="thumbnail/GDM image 1.jpg" alt="Thumbnail 1">
-                            <img class="thumbnail" src="thumbnail/GDM image 2.jpg" alt="Thumbnail 2">
-                            <img class="thumbnail" src="thumbnail/GDM image 3.jpg" alt="Thumbnail 3">
-                            <img class="thumbnail" src="thumbnail/GDM image 4.jpg" alt="Thumbnail 4">
-                            <img class="thumbnail" src="thumbnail/GDM image 5.jpg" alt="Thumbnail 5">
+                            <img class="thumbnail" src="thumbnail/AD image 1.jpeg" alt="Thumbnail 1">
+                            <img class="thumbnail" src="thumbnail/AD image 2.jpeg" alt="Thumbnail 2">
+                            <img class="thumbnail" src="thumbnail/AD image 3.jpeg" alt="Thumbnail 3">
+                            <img class="thumbnail" src="thumbnail/AD image 4.jpeg" alt="Thumbnail 4">
+                            <img class="thumbnail" src="thumbnail/AD image 5.jpeg" alt="Thumbnail 5">
                             <button class="slider-button next-button" onclick="nextImage()"><i
                                     class="bx bx-chevron-right"></i></button>
                         </div>
@@ -642,39 +780,43 @@ if ($result === false) {
 
 
                     <div class="product-details">
-                        <button class="edit-button">Edit</button>
                         <h1 class="product-title">
                             <?= $productName ?>
                         </h1>
-                        <p class="product-price">RM
-                            <?= $productPrice ?>
+
+                        <p class="product-price">
+                        <h2 class="original-price-strikethrough" id="originalPrice">RM101.00-RM200.00</h2>
+                        <h2 class="discounted-price" id="discountPrice">RM90.00-RM100.00</h2>
+                        <h2 class="discount-percent">
+                            <?= $discountPercent ?>
+                        </h2>
                         </p>
 
                         <p>Quantity:
                             <button class="quantity-button minus">-</button>
                             <input type="text" class="quantity-input" value="<?= $productQuantity ?>" readonly>
                             <button class="quantity-button plus">+</button>
-
+                        <h2 class="stock-left">
+                            <?= $productStockAmount ?>
+                        </h2>
                         </p>
+
 
                         <h2>Color</h2>
-                        <select name="productColor">
-                            <?php
-                            if (isset($productColorOptions)) {
-                                foreach ($productColorOptions as $color) {
-                                    echo '<option value="' . $color . '">' . $color . '</option>';
-                                }
-                            }
-                            ?>
+                        <select id="colorSelector" onchange="updatePrice()">
+                            <option value="Matte Black">Matte Black</option>
                         </select>
 
-                        <button type="button" class="buy-now-button">Buy now</button>
+                        <h2>Size</h2>
+                        <select id="sizeSelector" onchange="updatePrice()">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
 
-                        <h2>Specifications</h2>
-                        <p>
-                            <?= $productSpecification ?>
-                        </p>
-
+                        <div class="button-container">
+                            <button type="button" class="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
+                        </div>
 
                         <h2>Description</h2>
                         <p>
@@ -690,27 +832,16 @@ if ($result === false) {
                             <i class="bx bx-star"></i>
                             <?= $productRating ?>
                         </div>
-                        <button type="button" class="write-review">Write review</button>
+                        <button type="button" id="view_ratings" class="btn btn-primary">View Ratings</button>
+
 
                     </div>
-
-
-                    <form class=" edit-form" style="display: none;">
-                        <input type="text" name="newProductName" value="<?= $productName ?>">
-                        <input type="text" name="newProductPrice" value="<?= $productPrice ?>">
-                        <input type="text" name="newProductSpecification" value="<?= $productSpecification ?>">
-                        <input type="text" name="newProductDescription" value="<?= $productDescription ?>">
-
-                        <button type="button" class="save-button">Save</button>
-
-                    </form>
                 </div>
+
                 <?php
             }
             ?>
         </div>
-
-
         <center>
 
 
@@ -761,7 +892,7 @@ if ($result === false) {
                 img.src = img_meta.src;
             };
         });
-        // Hide the image popup container, but only if the user clicks outside the image
+
         image_popup.onclick = e => {
             if (e.target.className == 'image-popup') {
                 image_popup.style.display = "none";
@@ -780,62 +911,6 @@ if ($result === false) {
         });
     </script>
 
-    <script>
-        // JavaScript to toggle edit form visibility
-        document.querySelectorAll('.edit-button').forEach((button) => {
-            button.addEventListener('click', () => {
-                const productContainer = button.closest('.product-container');
-                productContainer.querySelector('.product-details').style.display = 'none';
-                productContainer.querySelector('.edit-form').style.display = 'block';
-            });
-        });
-
-        // Attach an event listener to each "Save" button
-        document.querySelectorAll('.save-button').forEach((button) => {
-            button.addEventListener('click', () => {
-                const productContainer = button.closest('.product-container');
-                const editForm = productContainer.querySelector('.edit-form');
-                const productId = productContainer.dataset.productId; // Add a data attribute for the product ID
-
-                // Collect updated data from the form
-                const formData = new FormData(editForm);
-
-                // Send updated data to the server using AJAX or Fetch
-                fetch('/update_product.php', {
-                    method: 'POST',
-                    body: formData,
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            // Update the product detail display with the new data
-                            const productTitle = productContainer.querySelector('.product-title');
-                            const productPrice = productContainer.querySelector('.product-price');
-                            const productSpecification = productContainer.querySelector('.Specifications');
-                            const productDescription = productContainer.querySelector('.Description');
-
-                            // Example: Update product title and price
-                            productTitle.textContent = data.newProductName;
-                            productPrice.textContent = 'RM ' + data.newProductPrice;
-                            productSpecification.textContent = data.newProductSpecification;
-                            productSpecification.textContent = data.newProductSpecification;
-
-                            // Hide the edit form and show original data
-                            editForm.style.display = 'none';
-                            productContainer.querySelector('.product-details').style.display = 'block';
-                        } else {
-                            // Handle error if the update fails
-                            console.error('Update failed:', data.error);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            });
-        });
-
-
-    </script>
 
     <script>
         // Function to handle color change
@@ -936,7 +1011,7 @@ if ($result === false) {
         function showImage(index) {
             currentImage = index;
             const mainImage = document.getElementById('mainImage');
-            mainImage.src = `thumbnail/GDM image ${index}.jpg`;
+            mainImage.src = `thumbnail/GDM image ${index}.jpeg`;
         }
 
         function prevImage() {
@@ -956,6 +1031,138 @@ if ($result === false) {
 
     </script>
 
+    <script>
+        function updatePrice() {
+            const colorSelector = document.getElementById('colorSelector');
+            const sizeSelector = document.getElementById('sizeSelector');
+            const originalPriceDisplay = document.getElementById('originalPrice');
+            const discountPriceDisplay = document.getElementById('discountPrice');
 
+            // Define price adjustments based on color and size
+            const priceMap = {
+                'Matte Black': {
+                    'S': { original: 101.00, discounted: 90.00 },
+                    'M': { original: 150.00, discounted: 140.00 },
+                    'L': { original: 200.00, discounted: 180.00 },
+                },
+            };
+
+            const selectedColor = colorSelector.value;
+            const selectedSize = sizeSelector.value;
+
+            // Get the price adjustments from the priceMap
+            const priceAdjustments = priceMap[selectedColor][selectedSize];
+
+            const discountedPrice = priceAdjustments.discounted;
+
+            // Display the updated prices
+            originalPriceDisplay.textContent = 'RM ' + priceAdjustments.original.toFixed(2);
+            discountPriceDisplay.textContent = 'RM ' + priceAdjustments.discounted.toFixed(2);
+
+            return discountedPrice;
+        }
+    </script>
+
+
+    <script>
+        const quantityInput = document.querySelector('.quantity-input');
+        const stockLeftSpan = document.getElementById('stockQuantity');
+        let stockLeft = <?= $productQuantity ?>; // Initialize stock with the available quantity
+
+        // Function to update the stock quantity displayed
+        function updateStockAndInput() {
+            quantityInput.value = stockLeft;
+            stockLeftSpan.textContent = stockLeft;
+        }
+
+        // Event listener for the plus button
+        document.querySelector('.quantity-button.plus').addEventListener('click', () => {
+            if (stockLeft > 0) {
+                stockLeft--; // Decrease stock when increasing quantity
+                updateStockAndInput();
+            }
+        });
+
+        // Event listener for the minus button
+        document.querySelector('.quantity-button.minus').addEventListener('click', () => {
+            if (stockLeft < <?= $productQuantity ?>) {
+                stockLeft++; // Increase stock when decreasing quantity
+                updateStockAndInput();
+            }
+        });
+    </script>
+
+    <script>
+        let shoppingCart = '';
+
+        function addToCart() {
+            // Define your product details
+            const productId = 'H002';
+            const productImage = "pictures/GDM_Helmet.jpg";
+            const productName = 'GDM Demon Motorcycle Helmet Full Face';
+
+            const colorSelect = document.getElementById('colorSelector');
+            const sizeSelect = document.getElementById('sizeSelector');
+
+            const color = colorSelect.value;
+            const size = sizeSelect.value;
+
+            const price = calculatePrice(color, size);
+
+            const data = {
+                product_id: productId,
+                productImage: productImage,
+                productName: productName,
+                price: price,
+                color: color,
+                size: size,
+                quantity: 1,
+            };
+
+            fetch('insert_into_cart.php', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        const shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+                        shoppingCart.push(data);
+                        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+
+                        console.log('Product added to the cart successfully.');
+                    } else {
+                        console.error('Error adding the product to the cart.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function calculatePrice(color, size) {
+            const priceMatrix = {
+                'Matte Black': {
+                    'S': 90.00,
+                    'M': 140.00,
+                    'L': 180.00,
+                },
+            };
+
+            return priceMatrix[color][size];
+        }
+    </script>
+
+    <script>
+        // Assuming you have a product ID available as $productId
+        const productId = 'H002';
+
+        document.getElementById('view_ratings').addEventListener('click', function () {
+            // Redirect to the "rating.php" page with the product identifier as a query parameter
+            window.location.href = `rating.php?product=${productId}`;
+        });
+    </script>
 
 </html>
